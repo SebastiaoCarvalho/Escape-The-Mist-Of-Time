@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class ButtonManager : MonoBehaviour
             _screens.Add(screen.name, screen);
             screen.SetActive(false);
         });
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadSceneAsync(2); // FIXME : change this in the future
     }
 
     public void OnClickMap() {
