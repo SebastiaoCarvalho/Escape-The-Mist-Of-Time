@@ -13,21 +13,24 @@ public class TaskManager : MonoBehaviour
     private GameObject _completedRegion;
     public GameObject StickyNotePrefab;
 
+    public static TaskManager Instance {get; set;}
+
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         _toDoRegion = GameObject.Find("ToDoRegion");
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
 
         _toDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab))
+            new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab), _toDoRegion)
         };
         _inProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", Instantiate(StickyNotePrefab))
+            new Task("Task B", "kill 'Mr Capeta'", Instantiate(StickyNotePrefab), _inProgressRegion)
         };
         _completedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", Instantiate(StickyNotePrefab))
+            new Task("Task A", "simply exist", Instantiate(StickyNotePrefab), _completedRegion)
         };
         ReloadTasks();
     }
@@ -47,6 +50,19 @@ public class TaskManager : MonoBehaviour
         }
         foreach(Task task in _completedTasks) {
             task.StickyNote.transform.SetParent(_completedRegion.transform, false);
+        }
+    }
+
+    public void OnClick(Task task) {
+        if (task.Region.name.Equals("InProgressRegion")) {
+            _inProgressTasks.Remove(task);
+            _toDoTasks.Add(task);
+            task.Region = _toDoRegion;
+        }
+        else if (task.Region.name.Equals("ToDoRegion")) {
+            _toDoTasks.Remove(task);
+            _inProgressTasks.Add(task);
+            task.Region = _inProgressRegion;
         }
     }
 }
