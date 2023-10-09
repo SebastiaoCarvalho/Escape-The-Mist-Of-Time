@@ -50,14 +50,15 @@ public class TaskManager : MonoBehaviour
 
     private void ReloadTaskGroup(List<Task> tasks, GameObject region) {
         RectTransform rect = region.GetComponent<RectTransform>();
-        Vector3 upBorder = new Vector3(0, rect.rect.yMax, 0);
+        RectTransform textRect = region.transform.GetChild(0).GetComponent<RectTransform>();
+        Vector3 upBorder = new Vector3(0, rect.rect.height/2 - textRect.rect.height, 0);
         foreach(Task task in tasks) {
             task.StickyNote.transform.SetParent(region.transform, false);
         }
         float step = rect.rect.height / (tasks.Count + 1);
         for (int i = 0; i < tasks.Count; i++) {
             tasks[i].StickyNote.transform.localPosition = upBorder - (i + 1) * step * Vector3.up;
-        }
+        }   
     }
 
     public void OnClick(Task task) {
