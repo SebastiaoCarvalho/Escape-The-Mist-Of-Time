@@ -24,7 +24,8 @@ public class TaskManager : MonoBehaviour
         _completedRegion = GameObject.Find("CompletedRegion");
 
         _toDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab), _toDoRegion)
+            new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab), _toDoRegion),
+            new Task("Task C", "Just die please", Instantiate(StickyNotePrefab), _toDoRegion)
         };
         _inProgressTasks = new List<Task>() {
             new Task("Task B", "kill 'Mr Capeta'", Instantiate(StickyNotePrefab), _inProgressRegion)
@@ -42,14 +43,20 @@ public class TaskManager : MonoBehaviour
     }
 
     private void ReloadTasks() {
-        foreach(Task task in _toDoTasks) {
-            task.StickyNote.transform.SetParent(_toDoRegion.transform, false);
+        ReloadTaskGroup(_toDoTasks, _toDoRegion);
+        ReloadTaskGroup(_inProgressTasks, _inProgressRegion);
+        ReloadTaskGroup(_completedTasks, _completedRegion);
+    }
+
+    private void ReloadTaskGroup(List<Task> tasks, GameObject region) {
+        RectTransform rect = region.GetComponent<RectTransform>();
+        Vector3 upBorder = new Vector3(0, rect.rect.yMax, 0);
+        foreach(Task task in tasks) {
+            task.StickyNote.transform.SetParent(region.transform, false);
         }
-        foreach(Task task in _inProgressTasks) {
-            task.StickyNote.transform.SetParent(_inProgressRegion.transform, false);
-        }
-        foreach(Task task in _completedTasks) {
-            task.StickyNote.transform.SetParent(_completedRegion.transform, false);
+        float step = rect.rect.height / (tasks.Count + 1);
+        for (int i = 0; i < tasks.Count; i++) {
+            tasks[i].StickyNote.transform.localPosition = upBorder - (i + 1) * step * Vector3.up;
         }
     }
 
