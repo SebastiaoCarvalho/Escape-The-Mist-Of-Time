@@ -17,6 +17,7 @@ public class ItemMenu
     public ItemMenu(string name)
     {
         this.name = name;
+        this.amount = amount;
     }
 
     public ItemMenu(string name, int amount) : this(name)
