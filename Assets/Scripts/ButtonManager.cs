@@ -56,4 +56,9 @@ public class ButtonManager : MonoBehaviour
         _previousScreen.SetActive(true);
     }
 
+    public void OnClickMainMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
+
 }
