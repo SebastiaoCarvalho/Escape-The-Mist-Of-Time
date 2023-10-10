@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -343,16 +343,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211278175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c29f84c7dc162c47867e0e734fcc791, type: 3}
+  m_Script: {fileID: 11500000, guid: b1f7f066101a7114dbe5ca782facb53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1730132948}
   offset: {x: -3, y: 0, z: -12}
   smoothTime: 0.5
-  xlookaheadValue: 2
-  zlookaheadValue: 3
-  bost1: 4
-  bost2: 4
+  xlookaheadValue: 3
+  zlookaheadValue: 8
+  bost1: 0
+  bost2: 0
 --- !u!1 &1605104468
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1730132948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7e737d6b1501b4dab18c4d45da3418, type: 3}
+  m_Script: {fileID: 11500000, guid: 483b8b540532503498c18b04d142d88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lastHorizontalValue: 0
