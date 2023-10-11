@@ -16,9 +16,14 @@ public class Player : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
     }
 
+    private void Update() {
+        this.gameObject.transform.eulerAngles = Vector3.zero;  // fix rotation
+    }
+
     void FixedUpdate()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), -9.81f, Input.GetAxis("Vertical"));
+        
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         if (move != Vector3.zero)
