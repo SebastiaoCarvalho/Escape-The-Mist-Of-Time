@@ -8,11 +8,13 @@ public class Interactor : MonoBehaviour
     [SerializeField] private Transform interactionPoint;
     [SerializeField] private float interactionPointRadius = 1.5f;
     [SerializeField] private LayerMask interactibleMask;
+    [SerializeField] private InteractionPromptUI interactionPromptUI;
 
     private readonly Collider[] colliders = new Collider[3];
     [SerializeField] private int numFound;
 
     private GameManager gameManager;
+    private IInteractible[] interactibles;
 
     private void Start()
     {
@@ -28,9 +30,7 @@ public class Interactor : MonoBehaviour
 
         if (numFound > 0)
         {
-            var interactibles = colliders[0].GetComponents<IInteractible>();
-            
-            Debug.Log(colliders[0].gameObject.tag);
+            interactibles = colliders[0].GetComponents<IInteractible>();
 
             if (colliders[0].gameObject.tag == "Respawn Point")
             {
@@ -39,15 +39,34 @@ public class Interactor : MonoBehaviour
 
             foreach (var interactible in interactibles)
             {
-                if (interactible != null && interactible.KeyPressed())
+                if (interactible != null)
                 {
-                    interactible.Interact(this);
+                    if (interactionPromptUI.CanDisplay()) 
+                    {
+                        interactionPromptUI.SetUp(interactible.InteractionPrompt);
+                    }
+                    
+                    if (interactible.KeyPressed())
+                    {
+                        interactible.Interact(this);
+                    }
                 }
             }
         }
         else
         {
-            gameManager.safePlace = false;
+            if (interactibles != null)
+            {
+                interactibles = null;
+            }
+            if (interactionPromptUI.isDisplayed)
+            {
+                interactionPromptUI.Close();
+            }
+            if (gameManager.safePlace)
+            {
+                gameManager.safePlace = false;
+            }
         }
     }
 
