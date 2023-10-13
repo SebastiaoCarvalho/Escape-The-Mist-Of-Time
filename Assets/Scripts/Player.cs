@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private GameManager gameManager;
     private float playerSpeed = 7.0f;
+    private float _attackRange = 5f;
     public float lastHorizontalValue;
     public float lastVerticalValue;
 
@@ -67,6 +69,28 @@ public class Player : MonoBehaviour
         else {
             lastVerticalValue = -1;
         }
+        if (Input.GetMouseButtonDown((int) MouseButton.Left)) {
+            if (ClosestEnemy() != null) {
+                ClosestEnemy().GetComponent<Enemy>().TakeDamage(100);
+            }
+        }
+    }
+
+    private GameObject ClosestEnemy() {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject enemy in enemies) {
+            Vector3 diff = enemy.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            Debug.Log(curDistance);
+            if (curDistance < _attackRange && curDistance < distance) {
+                closest = enemy;
+                distance = curDistance;
+            }
+        }
+        return closest;
     }
 
     public void Respawn(Vector3 position)
