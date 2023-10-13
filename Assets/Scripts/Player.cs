@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private GameManager gameManager;
     private float playerSpeed = 7.0f;
     private float _attackRange = 5f;
+    private float _hp = 100f;
     public float lastHorizontalValue;
     public float lastVerticalValue;
 
@@ -34,8 +35,8 @@ public class Player : MonoBehaviour
         }
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), -9.81f, Input.GetAxis("Vertical"));
-
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        
+        controller.Move(playerSpeed * Time.deltaTime * move);
 
         if (move != Vector3.zero)
         {
@@ -106,5 +107,19 @@ public class Player : MonoBehaviour
     public void ResetMove()
     {
         moved = false;
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.CompareTag("Enemy")) {
+            _hp -= 10;
+            if (_hp <= 0) {
+                Destroy(gameObject);
+                return;
+            }
+            Vector3 bounceBack = transform.position - other.gameObject.transform.position;
+            bounceBack.y = 0.5f; // add bounce back a little up
+            bounceBack.Normalize();
+            controller.Move(bounceBack * 5f);
+        }
     }
 }
