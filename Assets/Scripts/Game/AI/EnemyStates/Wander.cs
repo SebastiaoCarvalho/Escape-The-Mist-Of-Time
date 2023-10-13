@@ -17,7 +17,6 @@ namespace Escape.Game.AI.Enemy.States {
         }
 
         public override void Execute() {
-            Debug.Log(_destination + " " + _character.transform.position);
             if ((_destination - _character.transform.position).magnitude < 1f) {
                 Vector2 circle = UnityEngine.Random.insideUnitCircle * _radius;
                 _destination = _anchorPoint.transform.position + new Vector3(circle.x, 0, circle.y);
