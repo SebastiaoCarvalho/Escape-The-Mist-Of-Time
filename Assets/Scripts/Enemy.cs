@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
 
     private StateMachine _stateMachine;
+    private float _hp = 10;
     public GameObject AnchorPrefab;
     private GameObject _anchorPoint;
     // Start is called before the first frame update
@@ -27,5 +28,12 @@ public class Enemy : MonoBehaviour
     private GameObject FindNearestAnchor() {
         float min = GameObject.FindGameObjectsWithTag("Anchor").ToList().Min(x => (x.transform.position - transform.position).magnitude);
         return GameObject.FindGameObjectsWithTag("Anchor").ToList().Find(x => (x.transform.position - transform.position).magnitude == min);
+    }
+
+    public void TakeDamage(float damage) {
+        _hp -= damage;
+        if (_hp <= 0) {
+            Destroy(gameObject);
+        }
     }
 }
