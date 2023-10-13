@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Escape.Game.AI;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _anchorPoint = Instantiate(AnchorPrefab, transform.position, Quaternion.identity);
+        _anchorPoint = FindNearestAnchor();
         _stateMachine = new BasicEnemyStateMachine(gameObject, _anchorPoint);
     }
 
@@ -21,5 +22,10 @@ public class Enemy : MonoBehaviour
     {
         transform.eulerAngles = Vector3.zero;
         _stateMachine.ExecuteStateUpdate();
+    }
+
+    private GameObject FindNearestAnchor() {
+        float min = GameObject.FindGameObjectsWithTag("Anchor").ToList().Min(x => (x.transform.position - transform.position).magnitude);
+        return GameObject.FindGameObjectsWithTag("Anchor").ToList().Find(x => (x.transform.position - transform.position).magnitude == min);
     }
 }
