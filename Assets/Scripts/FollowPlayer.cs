@@ -6,7 +6,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public GameObject player;
-    public Vector3 offset = new Vector3(-3.0f, 0.0f, -12.0f);
+    public Vector3 offset = new Vector3(-3.0f, 10.0f, -12.0f);
 	public float smoothTime = 0.5f;
     public float xlookaheadValue = 3.0f;
     public float zlookaheadValue = 8.0f;
@@ -22,13 +22,21 @@ public class FollowPlayer : MonoBehaviour
     public float bost1;
     public float bost2;
 
+    private GameManager gameManager;
+
     void Start() {
         transform.position = transform.position + offset;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
 	void FixedUpdate() {
+        if (gameManager.timeOut)
+        {
+            return;
+        }
+
 		Vector3 goalPos = player.transform.position;
-		goalPos.y = transform.position.y;
+		//goalPos.y = transform.position.y;
 
         float xComponent = player.GetComponent<Player>().lastHorizontalValue * xlookaheadValue;
         if (player.GetComponent<Player>().lastHorizontalValue == 0) {
@@ -42,11 +50,19 @@ public class FollowPlayer : MonoBehaviour
         lastxComponent = xComponent;
         xComponent += xBoost;
 
-        float zComponent = player.GetComponent<Player>().lastVerticalValue * zlookaheadValue;
-        if (player.GetComponent<Player>().lastHorizontalValue == 0) {
+
+        float zComponent;
+        if (player.GetComponent<Player>().lastVerticalValue < 0) {
+            zComponent = player.GetComponent<Player>().lastVerticalValue * 2.0f;
+        } 
+        else {
+            zComponent = player.GetComponent<Player>().lastVerticalValue * zlookaheadValue;
+        }
+
+        if (player.GetComponent<Player>().lastVerticalValue == 0) {
             zBoost = 0.0f;
         }
-        if (lastxComponent == 0) {
+        if (lastzComponent == 0) {
             zBoost = player.GetComponent<Player>().lastVerticalValue * bost2;
             zComponent += zBoost;
         }
@@ -58,4 +74,13 @@ public class FollowPlayer : MonoBehaviour
 
 		transform.position = Vector3.SmoothDamp (transform.position, goalPos + offset + lookahead, ref velocity, smoothTime);
 	}
+
+    public void ResetOffset() {
+        lastxComponent = 0;
+        lastzComponent = 0;
+        xBoost = 0;
+        zBoost = 0;
+
+        transform.position = player.transform.position + offset;
+    }
 }
