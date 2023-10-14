@@ -92,7 +92,6 @@ public class Player : MonoBehaviour
         foreach (GameObject enemy in enemies) {
             Vector3 diff = enemy.transform.position - position;
             float curDistance = diff.sqrMagnitude;
-            Debug.Log(curDistance);
             if (curDistance < _attackRange && curDistance < distance) {
                 closest = enemy;
                 distance = curDistance;
