@@ -8,6 +8,7 @@ TagManager:
   - Anchor
   - Respawn Point
   - Enemy
+  - Resource
   layers:
   - Default
   - TransparentFX
