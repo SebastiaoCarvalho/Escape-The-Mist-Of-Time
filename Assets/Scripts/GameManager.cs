@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
+     private List<Task> _toDoTasks;
+    private List<Task> _inProgressTasks;
+    private List<Task> _completedTasks;
+    private List<IObserved> _observeds;
 
     public static GameManager Instance { get; private set; }
 
@@ -37,6 +41,21 @@ public class GameManager : MonoBehaviour
         {
             {"Stone", new ItemMenu("Stone", 3)}
         };
+        _toDoTasks = new List<Task>(){
+            new Task("Task D", "survive you dumbass", "ToDoRegion"),
+            new Task("Task C", "Just die please", "ToDoRegion")
+        };
+        _inProgressTasks = new List<Task>() {
+            new Task("Task B", "kill 'Mr Capeta'", "InProgressRegion")
+        };
+        _completedTasks = new List<Task>() {
+            new Task("Task A", "simply exist", "CompletedRegion")
+        };
+        _observeds = new List<IObserved>
+        {
+            GameObject.Find("Enemy").GetComponent<Enemy>()
+        };
+        _observeds[0].AddObserver(_inProgressTasks[0]);
     }
 
     public void UpdateTime(float timeDifference)
@@ -101,5 +120,12 @@ public class GameManager : MonoBehaviour
             _itemMenus.Add(item.Name, new ItemMenu(item.Name, 1));
             Debug.Log("Added " + item.Name + " to inventory");
         }
+    }
+
+    public void CompleteTask(Task task) {
+        _inProgressTasks.Remove(task);
+        _completedTasks.Add(task);
+        task.Region = "CompletedRegion";
+        Debug.Log("completed");
     }
 }
