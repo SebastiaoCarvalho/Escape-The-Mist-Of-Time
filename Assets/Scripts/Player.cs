@@ -127,4 +127,10 @@ public class Player : MonoBehaviour
             controller.Move(bounceBack * 5f);
         }
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Resource")) {
+            Destroy(other.gameObject);
+        }
+    }
 }
