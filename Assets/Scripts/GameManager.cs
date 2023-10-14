@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject gameCamera;
     [SerializeField] public GameData gameData;
-
+    
     public float remainingTimeAlive = 10.0f;
     public float slowDownTimeEffect = 1.0f;
     public bool timeOut = false;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public List<Upgrade> _upgrades;
 
     private List<IObserved> _observeds;
+    public static GameManager Instance {get; set;}
 
     public static GameManager Instance { get; private set; }
 
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour
         UpdateTime(0.0f);
         playerScript.ResetMove();
     }
-
+        
     public void CollectItem(Item item) {
         if (_itemMenus.ContainsKey(item.Name))
         {
@@ -139,4 +140,5 @@ public class GameManager : MonoBehaviour
         task.Region = "CompletedRegion";
         Debug.Log("completed");
     }
+
 }
