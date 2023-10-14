@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
     {
         Instance = this;
 
-        _inventoryRegion = GameObject.Find("Item1Region");
+        _inventoryRegion = GameObject.Find("InventoryRegion");
 
         _items = new List<ItemMenu>()
         {
