@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public float lastHorizontalValue;
     private bool _clicked;
     public float lastVerticalValue;
+    private int _skillPoints;
+    public int SkillPoints { get { return _skillPoints; } }
 
     private bool moved = false;
 
@@ -133,5 +135,13 @@ public class Player : MonoBehaviour
             GameObject parent = other.gameObject.transform.parent.gameObject; // colliders are on the children composing the resource
             Destroy(parent);
         }
+    }
+    
+    public void SpendSkillPoints(int amount) {
+        _skillPoints -= amount;
+    }
+
+    public void AddSkillPoint() {
+        _skillPoints++;
     }
 }

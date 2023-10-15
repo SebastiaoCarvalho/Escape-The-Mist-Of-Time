@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Upgrade {
     
@@ -8,6 +9,9 @@ public class Upgrade {
     private string _name;
     private string _description;
     private int _cost;
+
+    private bool _isPurchased = false;
+    public bool IsPurchased { get { return _isPurchased; } }
     private List<Upgrade> _children = new List<Upgrade>();
     public int ChildCount { get { return _children.Count; } }
     public GameObject Object { get; set; }
@@ -23,7 +27,7 @@ public class Upgrade {
     {
         Object = gameObject;
         Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
-        Debug.Log(Object);
+        Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
     }
 
     public Upgrade(string name, string description, int cost, Upgrade parent) : this(name, description, cost)
@@ -36,6 +40,7 @@ public class Upgrade {
     {
         Object = gameObject;
         Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+        Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
     }
 
     public void AddChild(Upgrade child)
@@ -46,5 +51,13 @@ public class Upgrade {
     public Upgrade GetChild(int index)
     {
         return _children[index];
+    }
+
+    public void Purchase(/* Player player */)
+    {
+        /* if (player.SkillPoints < _cost) return;
+        player.SpendSkillPoints(_cost); */
+        _isPurchased = true;
+        Object.GetComponent<Image>().color = Color.green;
     }
 }
