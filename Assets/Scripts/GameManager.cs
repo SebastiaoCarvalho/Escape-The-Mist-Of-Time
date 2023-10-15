@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public List<Upgrade> _upgrades;
 
     private List<IObserved> _observeds;
-    public static GameManager Instance {get; set;}
+    public static GameManager Instance { get; set; }
 
     public static GameManager Instance { get; private set; }
 
