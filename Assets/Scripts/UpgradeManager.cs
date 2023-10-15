@@ -10,9 +10,12 @@ public class UpgradeManager : MonoBehaviour
     public Material LineMaterial;
     private Upgrade _head;
     private bool _isDirty = true;
+
+    public static UpgradeManager Instance { get; set; }
     // Start is called before the first frame update
     void Awake()
     {
+        Instance = this;
         _upgradeScreen = this.gameObject.transform.parent.gameObject;
     }
 
@@ -70,5 +73,9 @@ public class UpgradeManager : MonoBehaviour
         {
             if (child.name.Equals("Line")) Destroy(child.gameObject);
         }
+    }
+
+    public void OnClick(Upgrade upgrade) {
+        if (! upgrade.IsPurchased) upgrade.Purchase();
     }
 }
