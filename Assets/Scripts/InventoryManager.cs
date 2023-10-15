@@ -38,6 +38,7 @@ public class InventoryManager : MonoBehaviour
         foreach(ItemMenu item in _items)
         {
             item.StickyNote.transform.SetParent(_inventoryRegion.transform, false);
+            item.RefreshStickyNote();
         }
     }
 

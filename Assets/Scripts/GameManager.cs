@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
     private Player playerScript;
     [SerializeField] private Vector3 respawnPosition;
 
+    private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
+
+    public static GameManager Instance { get; private set; }
+
+    private void Awake() {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +33,10 @@ public class GameManager : MonoBehaviour
         timeText = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
         smoke = GameObject.Find("SmokeCloud").GetComponent<SmokeController>();
         playerScript = player.GetComponent<Player>();
+        _itemMenus = new Dictionary<string, ItemMenu>()
+        {
+            {"Stone", new ItemMenu("Stone", 3)}
+        };
     }
 
     public void UpdateTime(float timeDifference)
@@ -78,5 +89,17 @@ public class GameManager : MonoBehaviour
         remainingTimeAlive = 10.0f;
         UpdateTime(0.0f);
         playerScript.ResetMove();
+    }
+
+    public void CollectItem(Item item) {
+        if (_itemMenus.ContainsKey(item.Name))
+        {
+            _itemMenus[item.Name].AddItem(item);
+        }
+        else
+        {
+            _itemMenus.Add(item.Name, new ItemMenu(item.Name, 1));
+            Debug.Log("Added " + item.Name + " to inventory");
+        }
     }
 }

@@ -30,5 +30,4 @@ public class Task
         StickyNote.GetComponent<Button>().onClick.AddListener(() => TaskManager.Instance.OnClick(this));
     }
 
-
 }
