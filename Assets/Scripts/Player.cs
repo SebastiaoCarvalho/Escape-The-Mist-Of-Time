@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 {
     private CharacterController controller;
     private GameManager gameManager;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
     private float playerSpeed = 7.0f;
     public float lastHorizontalValue;
     public float lastVerticalValue;
@@ -25,11 +23,6 @@ public class Player : MonoBehaviour
     private void Update() {
         this.gameObject.transform.eulerAngles = Vector3.zero;  // fix rotation
     }
-
-    // player shouldn't move when time hit 0
-    // trigger smoke covering player
-    // followed by respawn
-    // smoke opening again
 
     void FixedUpdate()
     {

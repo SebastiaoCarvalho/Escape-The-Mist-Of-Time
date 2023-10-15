@@ -22,12 +22,6 @@ public class InteractionPromptUI : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        //var rotation = mainCam.transform.rotation;
-        //transform.LookAt(transform.position + rotation * Vector3.forward, rotation * Vector3.up);
-    }
-
     public bool CanDisplay() {
         return count < uiPanels.Length;
     }

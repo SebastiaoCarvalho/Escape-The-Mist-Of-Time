@@ -25,12 +25,7 @@ public class GameManager : MonoBehaviour
     {
         timeText = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
         smoke = GameObject.Find("SmokeCloud").GetComponent<SmokeController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        playerScript = player.GetComponent<Player>();
     }
 
     public void UpdateTime(float timeDifference)
@@ -44,7 +39,6 @@ public class GameManager : MonoBehaviour
             timeOut = true;
             smoke.CloseSmoke();
             StartCoroutine(DelayRespawn(2.0f));
-            //RespawnPlayer();
             timeText.text = "Time: " + "0.00";
         }
         else{
@@ -73,7 +67,7 @@ public class GameManager : MonoBehaviour
     public void RespawnPlayer()
     {
         ResetTime();
-        player.GetComponent<Player>().Respawn(respawnPosition);
+        playerScript.Respawn(respawnPosition);
         gameCamera.GetComponent<FollowPlayer>().ResetOffset();
         smoke.OpenSmoke();
         timeOut = false;
@@ -83,6 +77,6 @@ public class GameManager : MonoBehaviour
     {
         remainingTimeAlive = 10.0f;
         UpdateTime(0.0f);
-        player.GetComponent<Player>().ResetMove();
+        playerScript.ResetMove();
     }
 }

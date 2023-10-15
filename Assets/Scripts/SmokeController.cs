@@ -30,19 +30,11 @@ public class SmokeController : MonoBehaviour
     public void CloseSmoke()
     {
         StartCoroutine(LerpFunction(openRadius, closedRadius, true, timeToLerp));
-        //gameManager.smokeClosed = true;
-        // reduzir o radius para 10
-        // quando chegar a 10, respawn
-        // gameManager.Respawn
     }
 
     public void OpenSmoke()
     {
         StartCoroutine(LerpFunction(closedRadius, openRadius, false, timeToLerp));
-        //gameManager.smokeClosed = false;
-        // reduzir o radius para 10
-        // quando chegar a 10, respawn
-        // gameManager.Respawn
     }
 
     IEnumerator LerpFunction(float startValue, float endValue, bool smokeClosed, float duration)
