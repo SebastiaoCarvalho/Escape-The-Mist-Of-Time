@@ -36,7 +36,6 @@ public class FollowPlayer : MonoBehaviour
         }
 
 		Vector3 goalPos = player.transform.position;
-		//goalPos.y = transform.position.y;
 
         float xComponent = player.GetComponent<Player>().lastHorizontalValue * xlookaheadValue;
         if (player.GetComponent<Player>().lastHorizontalValue == 0) {
