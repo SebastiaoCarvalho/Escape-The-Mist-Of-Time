@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public float lastHorizontalValue;
     public float lastVerticalValue;
 
+    private bool moved = false;
+
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -44,6 +46,10 @@ public class Player : MonoBehaviour
         {
             gameObject.transform.forward = move;
             if (move.x != 0 || move.z != 0)
+            {
+                moved = true;
+            }
+            if (moved)
             {
                 gameManager.UpdateTime(-Time.deltaTime);
             }
@@ -77,5 +83,11 @@ public class Player : MonoBehaviour
         controller.enabled = true;
         lastHorizontalValue = 0;
         lastVerticalValue = 0;
+        moved = false;
+    }
+
+    public void ResetMove()
+    {
+        moved = false;
     }
 }

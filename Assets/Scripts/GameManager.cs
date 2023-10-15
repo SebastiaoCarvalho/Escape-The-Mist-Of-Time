@@ -36,10 +36,8 @@ public class GameManager : MonoBehaviour
     public void UpdateTime(float timeDifference)
     {
         // do not allow time to pass if player is near thing
-        if (!safePlace)
-        {
-            remainingTimeAlive += timeDifference * slowDownTimeEffect;
-        }
+        remainingTimeAlive += timeDifference * slowDownTimeEffect;
+        
         if (remainingTimeAlive <= 0)
         {
             Debug.Log("respawning");
@@ -85,5 +83,6 @@ public class GameManager : MonoBehaviour
     {
         remainingTimeAlive = 10.0f;
         UpdateTime(0.0f);
+        player.GetComponent<Player>().ResetMove();
     }
 }
