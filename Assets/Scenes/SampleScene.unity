@@ -6324,12 +6324,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828123669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b5e4ab220bdfab4893dd9f2350eb703, type: 3}
+  m_Script: {fileID: 11500000, guid: eb6c15e361861c54b8dc14a4601c5fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 1595175702}
   player: {fileID: 1730132948}
-  gameCamera: {fileID: 880319682}
+  gameCamera: {fileID: 1211278175}
   remainingTimeAlive: 10
   slowDownTimeEffect: 1
   timeOut: 0
