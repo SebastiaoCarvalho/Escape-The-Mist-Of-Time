@@ -17,7 +17,9 @@ namespace Escape.Game.AI.Enemy.States {
         }
 
         public override void Execute() {
-            if ((_destination - _character.transform.position).magnitude < 1f) {
+            Vector2 destination = new Vector2(_destination.x, _destination.z);
+            Vector2 character = new Vector2(_character.transform.position.x, _character.transform.position.z);
+            if ((destination - character).magnitude < 1f) {
                 Vector2 circle = UnityEngine.Random.insideUnitCircle * _radius;
                 _destination = _anchorPoint.transform.position + new Vector3(circle.x, 0, circle.y);
                 /* if (Physics.Raycast(_destination + new Vector3(0, 100, 0), Vector3.down, out RaycastHit hit, 200f, LayerMask.GetMask("Ground")))
@@ -27,6 +29,7 @@ namespace Escape.Game.AI.Enemy.States {
                 
             }
             Vector3 movement = (_destination - _character.transform.position).normalized;
+            Debug.Log(movement);
             movement.y = 0;
             _character.transform.position += 5 * Time.deltaTime * movement;
         }
