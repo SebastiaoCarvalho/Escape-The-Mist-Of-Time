@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private SmokeController smoke;
     private Player playerScript;
+    public YouDiedPanel diedPanel;
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
@@ -68,7 +69,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("respawning");
             timeOut = true;
             smoke.CloseSmoke();
-            StartCoroutine(DelayRespawn(2.0f));
+            diedPanel.Open();
+            StartCoroutine(DelayRespawn(2.2f));
             timeText.text = "Time: " + "0.00";
         }
         else{
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
         playerScript.Respawn(respawnPosition);
         gameCamera.GetComponent<FollowPlayer>().ResetOffset();
         smoke.OpenSmoke();
+        diedPanel.Close();
         timeOut = false;
     }
 
