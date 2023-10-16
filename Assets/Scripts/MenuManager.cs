@@ -9,6 +9,13 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
+    [SerializeField] private GameObject MapScreen;
+    [SerializeField] private GameObject UpgradeScreen;
+    [SerializeField] private TaskManager TaskManager;
+    [SerializeField] private GameObject InventoryScreen;
+   
+    
+
     // Start is called before the first frame update
     void Start()
     {

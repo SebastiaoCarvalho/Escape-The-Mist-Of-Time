@@ -27,5 +27,7 @@ public class GameData : ScriptableObject
         inProgressTasks = new List<Task>();
         completedTasks = new List<Task>();
         items = new List<Item>();
+
+
     }
 }
