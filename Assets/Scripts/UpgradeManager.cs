@@ -8,7 +8,7 @@ public class UpgradeManager : MonoBehaviour
     private GameObject _upgradeScreen;
     public GameObject UpgradePrefab;
     public Material LineMaterial;
-    private Upgrade _head;
+    public Upgrade _head;
     private bool _isDirty = true;
 
     public static UpgradeManager Instance { get; set; }
@@ -20,9 +20,7 @@ public class UpgradeManager : MonoBehaviour
     }
 
     private void Start() {
-        _head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradePrefab));
-        new Upgrade("Mind kill", "Boost your psychic powers", 1, _head, Instantiate(UpgradePrefab));
-        new Upgrade("Flying", "Spread your wings", 1, _head, Instantiate(UpgradePrefab));
+
     }
 
     // Update is called once per frame

@@ -25,7 +25,17 @@ public class GameData : ScriptableObject
         inProgressTasks = new List<Task>();
         completedTasks = new List<Task>();
         items = new List<Item>();
+    }
 
-
+    public void CleanData()
+    {
+        player = new Player();
+        enemies = new List<Enemy>();
+        resources = new List<ResourceBehaviour>();
+        upgrades = new List<Upgrade>();
+        toDoTasks = new List<Task>();
+        inProgressTasks = new List<Task>();
+        completedTasks = new List<Task>();
+        items = new List<Item>();
     }
 }

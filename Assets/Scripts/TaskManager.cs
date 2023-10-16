@@ -23,17 +23,6 @@ public class TaskManager : MonoBehaviour
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
 
-        /*_toDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab), _toDoRegion.name),
-            new Task("Task C", "Just die please", Instantiate(StickyNotePrefab), _toDoRegion.name)
-        };
-        _inProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", Instantiate(StickyNotePrefab), _inProgressRegion.name)
-        };
-        _completedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", Instantiate(StickyNotePrefab), _completedRegion.name)
-        };*/
-
         _toDoTasks = new List<Task>();
         _inProgressTasks = new List<Task>();
         _completedTasks = new List<Task>();

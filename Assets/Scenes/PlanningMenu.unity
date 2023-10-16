@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1873,7 +1873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
   MapScreen: {fileID: 375347665}
-  UpgradeScreen: {fileID: 674175499}
+  UpgradeManager: {fileID: 148963286}
   TaskManager: {fileID: 121054588}
   InventoryScreen: {fileID: 1557685811}
 --- !u!4 &1372027739
