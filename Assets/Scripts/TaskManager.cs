@@ -5,12 +5,12 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
 
-    private List<Task> _toDoTasks;
-    private GameObject _toDoRegion;
-    private List<Task> _inProgressTasks;
-    private GameObject _inProgressRegion;
-    private List<Task> _completedTasks;
-    private GameObject _completedRegion;
+    public List<Task> _toDoTasks;
+    public GameObject _toDoRegion;
+    public List<Task> _inProgressTasks;
+    public GameObject _inProgressRegion;
+    public List<Task> _completedTasks;
+    public GameObject _completedRegion;
     public GameObject StickyNotePrefab;
 
     public static TaskManager Instance {get; set;}
@@ -23,7 +23,7 @@ public class TaskManager : MonoBehaviour
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
 
-        _toDoTasks = new List<Task>(){
+        /*_toDoTasks = new List<Task>(){
             new Task("Task D", "survive you dumbass", Instantiate(StickyNotePrefab), _toDoRegion.name),
             new Task("Task C", "Just die please", Instantiate(StickyNotePrefab), _toDoRegion.name)
         };
@@ -32,7 +32,12 @@ public class TaskManager : MonoBehaviour
         };
         _completedTasks = new List<Task>() {
             new Task("Task A", "simply exist", Instantiate(StickyNotePrefab), _completedRegion.name)
-        };
+        };*/
+
+        _toDoTasks = new List<Task>();
+        _inProgressTasks = new List<Task>();
+        _completedTasks = new List<Task>();
+
         ReloadTasks();
     }
 

@@ -6768,6 +6768,7 @@ MonoBehaviour:
   timeText: {fileID: 1595175702}
   player: {fileID: 1730132948}
   gameCamera: {fileID: 1211278175}
+  gameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
   remainingTimeAlive: 10
   slowDownTimeEffect: 1
   timeOut: 0
