@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public GameObject player;
     public GameObject gameCamera;
-    public GameData gameData;
+    [SerializeField] public GameData gameData;
 
     public float remainingTimeAlive = 10.0f;
     public float slowDownTimeEffect = 1.0f;
@@ -61,8 +61,11 @@ public class GameManager : MonoBehaviour
         _observeds[0].AddObserver(_inProgressTasks[0]);
 
 
-        gameData = ScriptableObject.CreateInstance<GameData>();
+        //Serialize data
         gameData.player = playerScript;
+        gameData.toDoTasks = _toDoTasks;
+        gameData.inProgressTasks = _inProgressTasks;
+        gameData.completedTasks = _completedTasks;
 
     }
 
