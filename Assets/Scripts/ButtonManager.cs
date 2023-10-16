@@ -11,8 +11,19 @@ public class ButtonManager : MonoBehaviour
     private GameObject _previousScreen;
     private Dictionary<string, GameObject> _screens;
     private Dictionary<string, GameObject> _buttons;
-    private int _currentButtonKeyIterator;
-    private bool _inIteration = false;
+    private ButtonEnum _currentButtonKeyIterator = ButtonEnum.Unsingned;
+    private ButtonEnum _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+
+    private enum ButtonEnum
+    {
+        MapButton,
+        UpgradesButton,
+        TasksButton,
+        InventoryButton,
+        MainMenuButton,
+        ExitButton,
+        Unsingned
+    }
 
     void Start()
     {
@@ -42,8 +53,7 @@ public class ButtonManager : MonoBehaviour
         {
             _previousScreen.SetActive(false);
         }
-        _inIteration = true;
-        _currentButtonKeyIterator = 0;
+        _currentButtonKeyIterator = ButtonEnum.MapButton;
         _previousScreen = _screens["MapScreen"];
         _previousScreen.SetActive(true);
     }
@@ -54,8 +64,7 @@ public class ButtonManager : MonoBehaviour
         {
             _previousScreen.SetActive(false);
         }
-        _inIteration = true;
-        _currentButtonKeyIterator = 1;
+        _currentButtonKeyIterator = ButtonEnum.UpgradesButton;
         _previousScreen = _screens["UpgradesScreen"];
         _previousScreen.SetActive(true);
     }
@@ -66,8 +75,7 @@ public class ButtonManager : MonoBehaviour
         {
             _previousScreen.SetActive(false);
         }
-        _inIteration = true;
-        _currentButtonKeyIterator = 2;
+        _currentButtonKeyIterator = ButtonEnum.TasksButton;
         _previousScreen = _screens["TasksScreen"];
         _previousScreen.SetActive(true);
     }
@@ -78,8 +86,7 @@ public class ButtonManager : MonoBehaviour
         {
             _previousScreen.SetActive(false);
         }
-        _inIteration = true;
-        _currentButtonKeyIterator = 3;
+        _currentButtonKeyIterator = ButtonEnum.InventoryButton;
         _previousScreen = _screens["InventoryScreen"];
         _previousScreen.SetActive(true);
     }
@@ -97,31 +104,56 @@ public class ButtonManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            _inIteration = true;
-            _currentButtonKeyIterator = 0;
-            if (_previousScreen != null)
+
+
+            if (_currentButtonKeyIteratorTop == ButtonEnum.MainMenuButton)
             {
-                _previousScreen.SetActive(false);
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+                _currentButtonKeyIterator = ButtonEnum.MapButton;
+                _previousScreen = _screens["MapScreen"];
+                _previousScreen.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
             }
-            _previousScreen = _screens["MapScreen"];
-            _previousScreen.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
-            //_buttons["MapButton"].Select();
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.ExitButton)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+                _currentButtonKeyIterator = ButtonEnum.InventoryButton;
+                _previousScreen = _screens["InventoryScreen"];
+                _previousScreen.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
+            }
+            //First when we enter the scene
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.Unsingned)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+                _currentButtonKeyIterator = ButtonEnum.MapButton;
+                _previousScreen = _screens["MapScreen"];
+                _previousScreen.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
+            }
+
+            //Shouldn't arrive here, just a failsafe
+            _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+
 
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            _inIteration = false;
-            if (_previousScreen != null)
+
+            if (_previousScreen != null && _currentButtonKeyIteratorTop == ButtonEnum.Unsingned)
             {
                 _previousScreen.SetActive(false);
             }
-            if (_currentButtonKeyIterator == 0)
+            if (_currentButtonKeyIterator == ButtonEnum.MapButton || _currentButtonKeyIterator == ButtonEnum.UpgradesButton)
             {
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
+                _currentButtonKeyIteratorTop = ButtonEnum.MainMenuButton;
                 EventSystem.current.SetSelectedGameObject(_buttons["MainMenuButton"]);
             }
-            else if (_currentButtonKeyIterator == 3)
+            else if (_currentButtonKeyIterator == ButtonEnum.TasksButton || _currentButtonKeyIterator == ButtonEnum.InventoryButton)
             {
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
+                _currentButtonKeyIteratorTop = ButtonEnum.ExitButton;
                 EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
             }
             else
@@ -129,28 +161,117 @@ public class ButtonManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(null);
             }
 
+            _currentButtonKeyIterator = ButtonEnum.Unsingned;
+
         }
-
-        //Not necessary and work a little bit weird
-
-        /*else if (!_inIteration && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)))
+        else if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)))  //This does not support gamepad input
         {
-
-            EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
-        }
-        else if (!_inIteration && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))
-        {
-            EventSystem.current.SetSelectedGameObject(_buttons["MainMenuButton"]);
-        }*/
-        else if (_inIteration && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)))  //This does not support gamepad input
-        {
-            if (_currentButtonKeyIterator == 3)
+            if (_currentButtonKeyIterator == ButtonEnum.InventoryButton)
             {
-                _currentButtonKeyIterator = 0;
+                _currentButtonKeyIterator = ButtonEnum.MapButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
             }
-            else
+            else if (_currentButtonKeyIterator == ButtonEnum.MapButton)
             {
-                _currentButtonKeyIterator++;
+                _currentButtonKeyIterator = ButtonEnum.UpgradesButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIterator == ButtonEnum.UpgradesButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.TasksButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIterator == ButtonEnum.TasksButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.InventoryButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.MainMenuButton)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.ExitButton;
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.ExitButton)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.MainMenuButton;
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
+            }
+
+
+
+            if (_previousScreen != null)
+            {
+                _previousScreen.SetActive(false);
+            }
+
+
+            switch (_currentButtonKeyIterator)
+            {
+                case ButtonEnum.MapButton:
+                    _previousScreen = _screens["MapScreen"];
+                    _previousScreen.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
+                    break;
+                case ButtonEnum.UpgradesButton:
+                    _previousScreen = _screens["UpgradesScreen"];
+                    _previousScreen.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(_buttons["UpgradesButton"]);
+                    break;
+                case ButtonEnum.TasksButton:
+                    _previousScreen = _screens["TasksScreen"];
+                    _previousScreen.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(_buttons["TasksButton"]);
+                    break;
+                case ButtonEnum.InventoryButton:
+                    _previousScreen = _screens["InventoryScreen"];
+                    _previousScreen.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
+                    break;
+            }
+
+            switch (_currentButtonKeyIteratorTop)
+            {
+                case ButtonEnum.MainMenuButton:
+                    EventSystem.current.SetSelectedGameObject(_buttons["MainMenuButton"]);
+                    break;
+                case ButtonEnum.ExitButton:
+                    EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
+                    break;
+            }
+
+
+        }
+        else if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))    //This does not support gamepad input
+        {
+            if (_currentButtonKeyIterator == ButtonEnum.InventoryButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.TasksButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIterator == ButtonEnum.MapButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.InventoryButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIterator == ButtonEnum.UpgradesButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.MapButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIterator == ButtonEnum.TasksButton)
+            {
+                _currentButtonKeyIterator = ButtonEnum.UpgradesButton;
+                _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.MainMenuButton)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.ExitButton;
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.ExitButton)
+            {
+                _currentButtonKeyIteratorTop = ButtonEnum.MainMenuButton;
+                _currentButtonKeyIterator = ButtonEnum.Unsingned;
             }
 
             if (_previousScreen != null)
@@ -158,65 +279,41 @@ public class ButtonManager : MonoBehaviour
                 _previousScreen.SetActive(false);
             }
 
-            switch (_currentButtonKeyIterator % 4)
+            switch (_currentButtonKeyIterator)
             {
-                case 0:
+                case ButtonEnum.MapButton:
                     _previousScreen = _screens["MapScreen"];
+                    _previousScreen.SetActive(true);
                     EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
                     break;
-                case 1:
+                case ButtonEnum.UpgradesButton:
                     _previousScreen = _screens["UpgradesScreen"];
+                    _previousScreen.SetActive(true);
                     EventSystem.current.SetSelectedGameObject(_buttons["UpgradesButton"]);
                     break;
-                case 2:
+                case ButtonEnum.TasksButton:
                     _previousScreen = _screens["TasksScreen"];
+                    _previousScreen.SetActive(true);
                     EventSystem.current.SetSelectedGameObject(_buttons["TasksButton"]);
                     break;
-                case 3:
+                case ButtonEnum.InventoryButton:
                     _previousScreen = _screens["InventoryScreen"];
+                    _previousScreen.SetActive(true);
                     EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
                     break;
             }
 
-            _previousScreen.SetActive(true);
-        }
-        else if (_inIteration && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))    //This does not support gamepad input
-        {
-            if (_currentButtonKeyIterator == 0)
+            switch (_currentButtonKeyIteratorTop)
             {
-                _currentButtonKeyIterator = 3;
-            }
-            else
-            {
-                _currentButtonKeyIterator--;
-            }
-
-            if (_previousScreen != null)
-            {
-                _previousScreen.SetActive(false);
-            }
-
-            switch (_currentButtonKeyIterator % 4)
-            {
-                case 0:
-                    _previousScreen = _screens["MapScreen"];
-                    EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
+                case ButtonEnum.MainMenuButton:
+                    EventSystem.current.SetSelectedGameObject(_buttons["MainMenuButton"]);
                     break;
-                case 1:
-                    _previousScreen = _screens["UpgradesScreen"];
-                    EventSystem.current.SetSelectedGameObject(_buttons["UpgradesButton"]);
-                    break;
-                case 2:
-                    _previousScreen = _screens["TasksScreen"];
-                    EventSystem.current.SetSelectedGameObject(_buttons["TasksButton"]);
-                    break;
-                case 3:
-                    _previousScreen = _screens["InventoryScreen"];
-                    EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
+                case ButtonEnum.ExitButton:
+                    EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
                     break;
             }
 
-            _previousScreen.SetActive(true);
+
         }
     }
 }
