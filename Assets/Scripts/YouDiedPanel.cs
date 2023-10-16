@@ -22,12 +22,6 @@ public class YouDiedPanel : MonoBehaviour
         text = textObject.GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Open()
     {
         panelObject.SetActive(true);
