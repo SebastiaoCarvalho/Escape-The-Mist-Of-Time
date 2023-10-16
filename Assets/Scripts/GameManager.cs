@@ -22,9 +22,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
-     private List<Task> _toDoTasks;
+    private List<Task> _toDoTasks;
     private List<Task> _inProgressTasks;
     private List<Task> _completedTasks;
+
+    [SerializeField] private List<Enemy> _enemies;
+
+    [SerializeField] private List<ResourceBehaviour> _resources;
+
+    private List<Upgrade> _upgrades;
+
     private List<IObserved> _observeds;
 
     public static GameManager Instance { get; private set; }
@@ -44,7 +51,7 @@ public class GameManager : MonoBehaviour
             {"Stone", new ItemMenu("Stone", 3)}
         };
 
-        _toDoTasks = new List<Task>(){
+        /*_toDoTasks = new List<Task>(){
             new Task("Task D", "survive you dumbass", "ToDoRegion"),
             new Task("Task C", "Just die please", "ToDoRegion")
         };
@@ -57,15 +64,18 @@ public class GameManager : MonoBehaviour
         _observeds = new List<IObserved>
         {
             GameObject.Find("Enemy").GetComponent<Enemy>()
-        };
+        };*/
         _observeds[0].AddObserver(_inProgressTasks[0]);
 
 
         //Serialize data
         gameData.player = playerScript;
-        gameData.toDoTasks = _toDoTasks;
-        gameData.inProgressTasks = _inProgressTasks;
-        gameData.completedTasks = _completedTasks;
+        _toDoTasks = gameData.toDoTasks;
+        _inProgressTasks = gameData.inProgressTasks;
+        _completedTasks = gameData.completedTasks;
+        gameData.enemies = _enemies;
+        gameData.resources = _resources;
+        _upgrades = gameData.upgrades;
 
     }
 
