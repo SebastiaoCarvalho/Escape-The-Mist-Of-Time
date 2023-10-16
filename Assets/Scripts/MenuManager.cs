@@ -9,12 +9,14 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
+    //chance to mapManager
     [SerializeField] private GameObject MapScreen;
-    [SerializeField] private GameObject UpgradeScreen;
+    [SerializeField] private UpgradeManager UpgradeManager;
     [SerializeField] private TaskManager TaskManager;
+    //chance to inventoryManager
     [SerializeField] private GameObject InventoryScreen;
-   
-    
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class MenuManager : MonoBehaviour
         GameData.completedTasks = new List<Task>() {
             new Task("Task A", "simply exist", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._completedRegion.name)
         };
+    }
 
         UpgradeManager.Instance._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
         GameData.upgrades = new List<Upgrade>()
@@ -42,6 +45,7 @@ public class MenuManager : MonoBehaviour
         };
 
         
+        UpdateUpgrades();
     }
 
     
