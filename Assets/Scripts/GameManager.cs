@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public GameObject player;
     public GameObject gameCamera;
+    public GameData gameData;
 
     public float remainingTimeAlive = 10.0f;
     public float slowDownTimeEffect = 1.0f;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
         {
             {"Stone", new ItemMenu("Stone", 3)}
         };
+
         _toDoTasks = new List<Task>(){
             new Task("Task D", "survive you dumbass", "ToDoRegion"),
             new Task("Task C", "Just die please", "ToDoRegion")
@@ -57,6 +59,11 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Enemy").GetComponent<Enemy>()
         };
         _observeds[0].AddObserver(_inProgressTasks[0]);
+
+
+        gameData = ScriptableObject.CreateInstance<GameData>();
+        gameData.player = playerScript;
+
     }
 
     public void UpdateTime(float timeDifference)
