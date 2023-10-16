@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private float _attackRange = 5f;
     private float _hp = 100f;
     public float lastHorizontalValue;
+    private bool _clicked;
     public float lastVerticalValue;
 
     private bool moved = false;
@@ -70,10 +71,14 @@ public class Player : MonoBehaviour
         else {
             lastVerticalValue = -1;
         }
-        if (Input.GetMouseButtonDown((int) MouseButton.Left)) {
-            if (ClosestEnemy() != null) {
-                ClosestEnemy().GetComponent<Enemy>().TakeDamage(100);
-            }
+        if (Input.GetMouseButton((int) MouseButton.Left) && !_clicked) {
+            GameObject enemy = ClosestEnemy();
+            _clicked = true;
+            if (enemy != null) 
+                enemy.GetComponent<Enemy>().TakeDamage(100); // For now kill enemy in one hit
+        }
+        else if (_clicked && !Input.GetMouseButton((int) MouseButton.Left)) {
+            _clicked = false;
         }
     }
 
