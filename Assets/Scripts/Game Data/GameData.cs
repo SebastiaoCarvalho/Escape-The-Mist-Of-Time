@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
 
-    public Player player = new Player();
+    public Player player = null;
     public List<Enemy> enemies = new List<Enemy>();
     public List<ResourceBehaviour> resources = new List<ResourceBehaviour>();
     public List<Upgrade> upgrades = new List<Upgrade>();
