@@ -50,17 +50,17 @@ public class GameManager : MonoBehaviour
             {"Stone", new ItemMenu("Stone", 3)}
         };
 
-        /* _observeds = new List<IObserved>
+        _observeds = new List<IObserved>
         {
             GameObject.Find("MrCapeta").GetComponent<Enemy>()
         };
-        _observeds[0].AddObserver(gameData.inProgressTasks[0]); */
+        _observeds[0].AddObserver(gameData.InProgressTasks[0]);
 
 
         // Complete data on beginning
-        gameData.player = playerScript;
-        gameData.enemies = _enemies;
-        gameData.resources = _resources;                  
+        gameData.Player = playerScript;
+        gameData.Enemies = _enemies;
+        gameData.Resources = _resources;                  
         // gameData.items = _items;
         
 
@@ -133,9 +133,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void CompleteTask(Task task) {
-        task._followUpTasks.ForEach(t => gameData.toDoTasks.Add(t));
-        gameData.inProgressTasks.Remove(task);
-        gameData.completedTasks.Add(task);
+        task.FollowUpTasks.ForEach(t => gameData.ToDoTasks.Add(t));
+        gameData.InProgressTasks.Remove(task);
+        gameData.CompletedTasks.Add(task);
         task.Region = "CompletedRegion";
         Debug.Log("completed");
     }

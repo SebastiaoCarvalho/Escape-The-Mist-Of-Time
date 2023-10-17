@@ -15,14 +15,17 @@ public class TaskManager : MonoBehaviour
 
     public static TaskManager Instance {get; set;}
 
+    private void Awake() {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
         _toDoRegion = GameObject.Find("ToDoRegion");
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
-                  
+        InitializeTasks();
         ReloadTasks();
     }
 
@@ -32,10 +35,17 @@ public class TaskManager : MonoBehaviour
         ReloadTasks();
     }
 
+    public void InitializeTasks() {
+        Debug.Log(GameData.ToDoTasks.Count);
+        GameData.ToDoTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
+        GameData.InProgressTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
+        GameData.CompletedTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
+    }
+
     private void ReloadTasks() {
-        ReloadTaskGroup(GameData.toDoTasks, _toDoRegion);
-        ReloadTaskGroup(GameData.inProgressTasks, _inProgressRegion);
-        ReloadTaskGroup(GameData.completedTasks, _completedRegion);
+        ReloadTaskGroup(GameData.ToDoTasks, _toDoRegion);
+        ReloadTaskGroup(GameData.InProgressTasks, _inProgressRegion);
+        ReloadTaskGroup(GameData.CompletedTasks, _completedRegion);
     }
 
     private void ReloadTaskGroup(List<Task> tasks, GameObject region) {
@@ -53,13 +63,13 @@ public class TaskManager : MonoBehaviour
 
     public void OnClick(Task task) {
         if (task.Region.Equals("InProgressRegion")) {
-            GameData.inProgressTasks.Remove(task);
-            GameData.toDoTasks.Add(task);
+            GameData.InProgressTasks.Remove(task);
+            GameData.ToDoTasks.Add(task);
             task.Region = _toDoRegion.name;
         }
         else if (task.Region.Equals("ToDoRegion")) {
-            GameData.toDoTasks.Remove(task);
-            GameData.inProgressTasks.Add(task);
+            GameData.ToDoTasks.Remove(task);
+            GameData.InProgressTasks.Add(task);
             task.Region = _inProgressRegion.name;
         }
     }

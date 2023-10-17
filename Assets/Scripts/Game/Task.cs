@@ -12,7 +12,8 @@ public class Task : IObserver
     private string _description;
     public GameObject StickyNote {get; set;}
     public string Region {get; set;}
-    public List<Task> _followUpTasks = new List<Task>();
+    private List<Task> _followUpTasks = new List<Task>();
+    public List<Task> FollowUpTasks {get => _followUpTasks; }
 
     public Task(string name, string description, string region)
     {
@@ -29,14 +30,16 @@ public class Task : IObserver
 
     public Task(string name, string description, GameObject stickyNote, string region) : this(name, description, region)
     {
-        StickyNote = stickyNote;
         Region = region;
-        stickyNote.name = name;
-        stickyNote.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
-        stickyNote.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = description;
-        StickyNote.GetComponent<Button>().onClick.AddListener(() => TaskManager.Instance.OnClick(this));
     }
 
+    public void InitializePrefab(GameObject instantiated) {
+        StickyNote = instantiated;
+        StickyNote.name = _name;
+        StickyNote.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _name;
+        StickyNote.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _description;
+        StickyNote.GetComponent<Button>().onClick.AddListener(() => TaskManager.Instance.OnClick(this));
+    }
 
     public void Update()
     {
