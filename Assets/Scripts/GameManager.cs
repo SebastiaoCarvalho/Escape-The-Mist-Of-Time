@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
     public List<Upgrade> _upgrades;
 
     private List<IObserved> _observeds;
-    public static GameManager Instance { get; set; }
-
     public static GameManager Instance { get; private set; }
 
     private void Awake() {
@@ -135,6 +133,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void CompleteTask(Task task) {
+        task._followUpTasks.ForEach(t => gameData.toDoTasks.Add(t));
         gameData.inProgressTasks.Remove(task);
         gameData.completedTasks.Add(task);
         task.Region = "CompletedRegion";
