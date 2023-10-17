@@ -9,11 +9,11 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
-    //chance to mapManager
+    //change to mapManager
     [SerializeField] private GameObject MapScreen;
     [SerializeField] private UpgradeManager UpgradeManager;
     [SerializeField] private TaskManager TaskManager;
-    //chance to inventoryManager
+    //change to inventoryManager
     [SerializeField] private GameObject InventoryScreen;
 
 
