@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, IObserved
     void Start()
     {
         _anchorPoint = FindNearestAnchor();
-        _stateMachine = new BasicEnemyStateMachine(gameObject, _anchorPoint);
+        _stateMachine = new BasicEnemyStateMachine(gameObject, _anchorPoint, GameObject.Find("Player"));
     }
 
     // Update is called once per frame

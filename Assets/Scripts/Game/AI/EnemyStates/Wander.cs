@@ -29,7 +29,6 @@ namespace Escape.Game.AI.Enemy.States {
                 
             }
             Vector3 movement = (_destination - _character.transform.position).normalized;
-            Debug.Log(movement);
             movement.y = 0;
             _character.transform.position += 5 * Time.deltaTime * movement;
         }
