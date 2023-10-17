@@ -22,15 +22,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
-    private List<Task> _toDoTasks;
-    private List<Task> _inProgressTasks;
-    private List<Task> _completedTasks;
+    public List<Task> _toDoTasks;
+    public List<Task> _inProgressTasks;
+    public List<Task> _completedTasks;
 
-    [SerializeField] private List<Enemy> _enemies;
+    [SerializeField] public List<Enemy> _enemies;
 
-    [SerializeField] private List<ResourceBehaviour> _resources;
+    [SerializeField] public List<ResourceBehaviour> _resources;
 
-    private List<Upgrade> _upgrades;
+    public List<Upgrade> _upgrades;
 
     private List<IObserved> _observeds;
 
@@ -51,31 +51,19 @@ public class GameManager : MonoBehaviour
             {"Stone", new ItemMenu("Stone", 3)}
         };
 
-        /*_toDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", "ToDoRegion"),
-            new Task("Task C", "Just die please", "ToDoRegion")
-        };
-        _inProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", "InProgressRegion")
-        };
-        _completedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", "CompletedRegion")
-        };
         _observeds = new List<IObserved>
         {
             GameObject.Find("Enemy").GetComponent<Enemy>()
-        };*/
-        _observeds[0].AddObserver(_inProgressTasks[0]);
+        };
+        _observeds[0].AddObserver(gameData.inProgressTasks[0]);
 
 
-        //Serialize data
+        // Complete data on beginning
         gameData.player = playerScript;
-        _toDoTasks = gameData.toDoTasks;
-        _inProgressTasks = gameData.inProgressTasks;
-        _completedTasks = gameData.completedTasks;
         gameData.enemies = _enemies;
-        gameData.resources = _resources;
-        _upgrades = gameData.upgrades;
+        gameData.resources = _resources;                  
+        // gameData.items = _items;
+        
 
     }
 
@@ -146,8 +134,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void CompleteTask(Task task) {
-        _inProgressTasks.Remove(task);
-        _completedTasks.Add(task);
+        gameData.inProgressTasks.Remove(task);
+        gameData.completedTasks.Add(task);
         task.Region = "CompletedRegion";
         Debug.Log("completed");
     }
