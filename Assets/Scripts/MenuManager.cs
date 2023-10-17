@@ -9,15 +9,6 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
-    //change to mapManager
-    [SerializeField] private GameObject MapScreen;
-    [SerializeField] private UpgradeManager UpgradeManager;
-    [SerializeField] private TaskManager TaskManager;
-    //change to inventoryManager
-    [SerializeField] private GameObject InventoryScreen;
-
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -38,14 +29,13 @@ public class MenuManager : MonoBehaviour
 
         UpgradeManager.Instance._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
         GameData.upgrades = new List<Upgrade>()
-    {
+        {
             UpgradeManager.Instance._head,
             new Upgrade("Mind kill", "Boost your psychic powers", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab)),
             new Upgrade("Flying", "Spread your wings", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab))
         };
 
-        
-        UpdateUpgrades();
+
     }
 
     
