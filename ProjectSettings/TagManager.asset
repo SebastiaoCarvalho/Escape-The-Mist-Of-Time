@@ -9,6 +9,8 @@ TagManager:
   - Respawn Point
   - Enemy
   - Resource
+  - MenuButton
+  - MainMenuButton
   layers:
   - Default
   - TransparentFX
