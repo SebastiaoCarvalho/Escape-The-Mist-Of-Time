@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         _observeds = new List<IObserved>
         {
-            GameObject.Find("Enemy").GetComponent<Enemy>()
+            GameObject.Find("MrCapeta").GetComponent<Enemy>()
         };
         _observeds[0].AddObserver(gameData.inProgressTasks[0]);
 
