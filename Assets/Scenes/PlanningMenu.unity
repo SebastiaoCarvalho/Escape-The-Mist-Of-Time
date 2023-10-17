@@ -445,6 +445,7 @@ MonoBehaviour:
   _inProgressRegion: {fileID: 0}
   _completedRegion: {fileID: 0}
   StickyNotePrefab: {fileID: 4026823061692814688, guid: 0f9cd60b11fe1a549b7cc95db3fdf27b, type: 3}
+  GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
 --- !u!1 &148963284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,10 +1873,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
-  MapScreen: {fileID: 375347665}
-  UpgradeManager: {fileID: 148963286}
-  TaskManager: {fileID: 121054588}
-  InventoryScreen: {fileID: 1557685811}
 --- !u!4 &1372027739
 Transform:
   m_ObjectHideFlags: 0

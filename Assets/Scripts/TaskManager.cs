@@ -5,13 +5,13 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
 
-    public List<Task> _toDoTasks;
     public GameObject _toDoRegion;
-    public List<Task> _inProgressTasks;
     public GameObject _inProgressRegion;
-    public List<Task> _completedTasks;
     public GameObject _completedRegion;
+
     public GameObject StickyNotePrefab;
+
+    [SerializeField] private GameData GameData;
 
     public static TaskManager Instance {get; set;}
 
@@ -22,11 +22,7 @@ public class TaskManager : MonoBehaviour
         _toDoRegion = GameObject.Find("ToDoRegion");
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
-
-        _toDoTasks = new List<Task>();
-        _inProgressTasks = new List<Task>();
-        _completedTasks = new List<Task>();
-
+                  
         ReloadTasks();
     }
 
@@ -37,9 +33,9 @@ public class TaskManager : MonoBehaviour
     }
 
     private void ReloadTasks() {
-        ReloadTaskGroup(_toDoTasks, _toDoRegion);
-        ReloadTaskGroup(_inProgressTasks, _inProgressRegion);
-        ReloadTaskGroup(_completedTasks, _completedRegion);
+        ReloadTaskGroup(GameData.toDoTasks, _toDoRegion);
+        ReloadTaskGroup(GameData.inProgressTasks, _inProgressRegion);
+        ReloadTaskGroup(GameData.completedTasks, _completedRegion);
     }
 
     private void ReloadTaskGroup(List<Task> tasks, GameObject region) {
@@ -57,13 +53,13 @@ public class TaskManager : MonoBehaviour
 
     public void OnClick(Task task) {
         if (task.Region.Equals("InProgressRegion")) {
-            _inProgressTasks.Remove(task);
-            _toDoTasks.Add(task);
+            GameData.inProgressTasks.Remove(task);
+            GameData.toDoTasks.Add(task);
             task.Region = _toDoRegion.name;
         }
         else if (task.Region.Equals("ToDoRegion")) {
-            _toDoTasks.Remove(task);
-            _inProgressTasks.Add(task);
+            GameData.toDoTasks.Remove(task);
+            GameData.inProgressTasks.Add(task);
             task.Region = _inProgressRegion.name;
         }
     }
