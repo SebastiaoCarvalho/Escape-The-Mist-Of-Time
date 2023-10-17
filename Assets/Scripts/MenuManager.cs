@@ -25,7 +25,7 @@ public class MenuManager : MonoBehaviour
         GameData.completedTasks = new List<Task>() {
             new Task("Task A", "simply exist", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._completedRegion.name)
         };
-    }
+    
 
         UpgradeManager.Instance._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
         GameData.upgrades = new List<Upgrade>()
