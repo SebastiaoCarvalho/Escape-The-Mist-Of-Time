@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Escape.Game.AI {
 
     public class StateMachine {
@@ -24,7 +26,18 @@ namespace Escape.Game.AI {
         }
 
         public void ExecuteStateUpdate() {
+            Update();
             CurrentState?.Execute();
+        }
+
+        public void Update() {
+            foreach (Transition transition in CurrentState.Transitions) {
+                if (transition.IsTriggered()) {
+                    ChangeState(transition.TargetState);
+                    Debug.Log("Transitioned to " + CurrentState.GetType().Name);
+                    break;
+                }
+            }
         }
 
         public void Reset() { // ignore exit from previous state and enter to new state
