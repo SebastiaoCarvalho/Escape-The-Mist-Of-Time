@@ -9,15 +9,6 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
-    //change to mapManager
-    [SerializeField] private GameObject MapScreen;
-    [SerializeField] private UpgradeManager UpgradeManager;
-    [SerializeField] private TaskManager TaskManager;
-    //change to inventoryManager
-    [SerializeField] private GameObject InventoryScreen;
-
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -25,44 +16,26 @@ public class MenuManager : MonoBehaviour
         GameData.CleanData();
 
         GameData.toDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", Instantiate(TaskManager.StickyNotePrefab), TaskManager._toDoRegion.name),
-            new Task("Task C", "Just die please", Instantiate(TaskManager.StickyNotePrefab), TaskManager._toDoRegion.name)
+            new Task("Task D", "survive you dumbass", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._toDoRegion.name),
+            new Task("Task C", "Just die please", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._toDoRegion.name)
         };
         GameData.inProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", Instantiate(TaskManager.StickyNotePrefab), TaskManager._inProgressRegion.name)
+            new Task("Task B", "kill 'Mr Capeta'", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._inProgressRegion.name)
         };
         GameData.completedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", Instantiate(TaskManager.StickyNotePrefab), TaskManager._completedRegion.name)
+            new Task("Task A", "simply exist", Instantiate(TaskManager.Instance.StickyNotePrefab), TaskManager.Instance._completedRegion.name)
         };
 
-        UpgradeManager._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.UpgradePrefab));
+        UpgradeManager.Instance._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
         GameData.upgrades = new List<Upgrade>()
         {
-            UpgradeManager._head,
-            new Upgrade("Mind kill", "Boost your psychic powers", 1, UpgradeManager._head, Instantiate(UpgradeManager.UpgradePrefab)),
-            new Upgrade("Flying", "Spread your wings", 1, UpgradeManager._head, Instantiate(UpgradeManager.UpgradePrefab))
+            UpgradeManager.Instance._head,
+            new Upgrade("Mind kill", "Boost your psychic powers", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab)),
+            new Upgrade("Flying", "Spread your wings", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab))
         };
 
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Do I need this here?
-        UpdateTask();
-        UpdateUpgrades();
-    }
-
-    void UpdateTask()
-    {
-        TaskManager._toDoTasks = GameData.toDoTasks;
-        TaskManager._inProgressTasks = GameData.inProgressTasks;
-        TaskManager._completedTasks = GameData.completedTasks;
-    }
-
-    void UpdateUpgrades()
-    {
-
-    }
+    
 }
