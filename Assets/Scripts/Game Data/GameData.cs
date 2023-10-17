@@ -19,7 +19,7 @@ public class GameData : ScriptableObject
 
     public void CleanData()
     {
-        player = new Player();
+        player = null;
         enemies = new List<Enemy>();
         resources = new List<ResourceBehaviour>();
         upgrades = new List<Upgrade>();
@@ -29,15 +29,4 @@ public class GameData : ScriptableObject
         items = new List<Item>();
     }
 
-    public void CleanData()
-    {
-        player = new Player();
-        enemies = new List<Enemy>();
-        resources = new List<ResourceBehaviour>();
-        upgrades = new List<Upgrade>();
-        toDoTasks = new List<Task>();
-        inProgressTasks = new List<Task>();
-        completedTasks = new List<Task>();
-        items = new List<Item>();
-    }
 }
