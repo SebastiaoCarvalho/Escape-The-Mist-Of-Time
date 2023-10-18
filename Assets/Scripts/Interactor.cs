@@ -27,13 +27,13 @@ public class Interactor : MonoBehaviour
     void Update()
     {
         numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, interactionPointRadius, colliders, (int)interactibleMask);
-
         if (numFound > 0)
         {
             interactibles = colliders[0].GetComponents<IInteractible>();
 
             if (colliders[0].gameObject.tag == "Respawn Point")
             {
+                interactibles = colliders[0].transform.parent.GetComponents<IInteractible>();
                 gameManager.safePlace = true;
             }
 

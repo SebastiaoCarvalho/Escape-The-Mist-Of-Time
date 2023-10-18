@@ -131,8 +131,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Resource")) {
-            GameObject parent = other.gameObject.transform.parent.gameObject; // colliders are on the children composing the resource
-            Destroy(parent);
+            Destroy(other.gameObject);
         }
     }
     
