@@ -8,6 +8,8 @@ public class MenuManager : MonoBehaviour
 {
 
     [SerializeField] private GameData GameData;
+    [SerializeField] private GameObject MrCapetaPrefab;
+    [SerializeField] private GameObject SpikeyPrefab;
 
     void Awake()
     {
@@ -17,6 +19,7 @@ public class MenuManager : MonoBehaviour
         {
             InitializeGameData();
         }
+        Debug.Log(GameData.Player.position);
     }
 
     private void InitializeGameData() {
@@ -45,6 +48,28 @@ public class MenuManager : MonoBehaviour
             new Item("Stone", "This is a stone"),
             new Item("Stone", "This is a stone"),
         };
+        GameData.Enemies = new List<EnemyData>();
+        EnemyData enemy1 = new EnemyData
+        {
+            prefab = MrCapetaPrefab,
+            position = new Vector3(130, 6.5f, 444),
+            hp = 10
+        };
+        GameData.Enemies.Add(enemy1);
+        EnemyData enemy2 = new EnemyData
+        {
+            prefab = SpikeyPrefab,
+            position = new Vector3(84, -8.1f, 425),
+            hp = 10
+        };
+        GameData.Enemies.Add(enemy2);
+        GameData.Player = new PlayerData
+        {
+            position = new Vector3(25, -6.97f, 391),
+            hp = 100,
+            skillPoints = 0
+        };
+
     }
 
     public void Clean() {

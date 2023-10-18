@@ -4,6 +4,12 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public struct PlayerData {
+    public Vector3 position;
+    public float hp;
+    public int skillPoints;
+}
+
 public class Player : MonoBehaviour
 {
     private CharacterController controller;
@@ -11,16 +17,18 @@ public class Player : MonoBehaviour
     private float playerSpeed = 7.0f;
     private float _attackRange = 5f;
     private float _hp = 100f;
+    public float HP { get { return _hp; } set { _hp = value; } }
     public float lastHorizontalValue;
     private bool _clicked;
     public float lastVerticalValue;
     private int _skillPoints;
-    public int SkillPoints { get { return _skillPoints; } }
+    public int SkillPoints { get { return _skillPoints; } set { _skillPoints = value; } }
 
     private bool moved = false;
 
     private void Start()
     {
+        Debug.Log("Player position " + transform.position);
         controller = gameObject.GetComponent<CharacterController>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameManager.SetRespawnPosition(transform.position);
@@ -142,4 +150,5 @@ public class Player : MonoBehaviour
     public void AddSkillPoint() {
         _skillPoints++;
     }
+
 }
