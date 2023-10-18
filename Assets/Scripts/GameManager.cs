@@ -50,11 +50,11 @@ public class GameManager : MonoBehaviour
             {"Stone", new ItemMenu("Stone", 3)}
         };
 
-        _observeds = new List<IObserved>
+        /* _observeds = new List<IObserved>
         {
             GameObject.Find("MrCapeta").GetComponent<Enemy>()
         };
-        _observeds[0].AddObserver(gameData.inProgressTasks[0]);
+        _observeds[0].AddObserver(gameData.inProgressTasks[0]); */
 
 
         // Complete data on beginning
