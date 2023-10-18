@@ -37,9 +37,9 @@ public class TaskManager : MonoBehaviour
 
     public void InitializeTasks() {
         Debug.Log(GameData.ToDoTasks.Count);
-        GameData.ToDoTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
-        GameData.InProgressTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
-        GameData.CompletedTasks.ForEach(task => task.StickyNote = Instantiate(StickyNotePrefab));
+        GameData.ToDoTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
+        GameData.InProgressTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
+        GameData.CompletedTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
     }
 
     private void ReloadTasks() {
