@@ -32,6 +32,8 @@ namespace Escape.Game.AI.Enemy.States {
             Vector3 predictedPosition = _player.transform.position + t * playerVelocity;
             Vector3 movement = (predictedPosition - _character.transform.position).normalized;
             _character.transform.position += 5 * Time.deltaTime * movement;
+            _character.transform.rotation = Quaternion.LookRotation(movement);
+            _character.transform.rotation *= Quaternion.Euler(0, 90, 0);
         }
 
     }
