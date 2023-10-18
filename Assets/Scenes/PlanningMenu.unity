@@ -1947,6 +1947,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
+  MrCapetaPrefab: {fileID: 5021648124025235503, guid: 295f3caa8f66289409fd500743100a7a, type: 3}
+  SpikeyPrefab: {fileID: 5083018882446919944, guid: 2b59af49353b17c4689e65fd6c85f5cc, type: 3}
 --- !u!4 &1372027739
 Transform:
   m_ObjectHideFlags: 0

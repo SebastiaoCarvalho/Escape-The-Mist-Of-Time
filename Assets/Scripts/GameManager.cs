@@ -6,7 +6,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
-    public GameObject player;
+    private GameObject player;
     public GameObject gameCamera;
     [SerializeField] public GameData gameData;
     
@@ -22,11 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
-    public List<Task> _toDoTasks;
-    public List<Task> _inProgressTasks;
-    public List<Task> _completedTasks;
-
-    [SerializeField] public List<Enemy> _enemies;
+    [SerializeField] private List<Enemy> _enemies;
+    public List<Enemy> Enemies { get { return _enemies; } }
 
     [SerializeField] public List<ResourceBehaviour> _resources;
 
@@ -42,6 +39,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
+        Debug.Log(player.GetInstanceID());
+        playerScript = player.GetComponent<Player>();
         timeText = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
         smoke = GameObject.Find("SmokeCloud").GetComponent<SmokeController>();
         playerScript = player.GetComponent<Player>();
@@ -58,12 +58,27 @@ public class GameManager : MonoBehaviour
 
 
         // Complete data on beginning
-        gameData.Player = playerScript;
-        gameData.Enemies = _enemies;
+        UpdatePlayer();
+        UpdateEnemies();
         gameData.Resources = _resources;                  
         // gameData.items = _items;
         
 
+    }
+
+    private void UpdatePlayer() {
+        playerScript.gameObject.transform.position = gameData.Player.position;
+        Debug.Log("Set Player position " + playerScript.gameObject.transform.position);
+        playerScript.HP = gameData.Player.hp;
+        playerScript.SkillPoints = gameData.Player.skillPoints;
+    }
+
+    private void UpdateEnemies() {
+        foreach (EnemyData enemyData in gameData.Enemies) {
+            GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
+            enemy.GetComponent<Enemy>().Hp = enemyData.hp;
+            _enemies.Add(enemy.GetComponent<Enemy>());
+        }
     }
 
     public void UpdateTime(float timeDifference)
@@ -138,6 +153,25 @@ public class GameManager : MonoBehaviour
         gameData.CompletedTasks.Add(task);
         task.Region = "CompletedRegion";
         Debug.Log("completed");
+    }
+
+    private void OnDestroy() {
+        gameData.Player = new PlayerData{
+            position = respawnPosition,
+            hp = playerScript.HP,
+            skillPoints = playerScript.SkillPoints
+        };
+        List<EnemyData> previous = gameData.Enemies;
+        gameData.Enemies = new List<EnemyData>();
+        for (int i = 0; i < _enemies.Count; i++) {
+            if (_enemies[i] != null) {
+                gameData.Enemies.Add(new EnemyData{
+                    prefab = previous[i].prefab,
+                    position = _enemies[i].transform.position,
+                    hp = _enemies[i].Hp
+                });
+            }
+        }
     }
 
 }

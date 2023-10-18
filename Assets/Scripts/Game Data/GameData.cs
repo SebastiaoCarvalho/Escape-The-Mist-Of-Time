@@ -8,10 +8,10 @@ public class GameData : ScriptableObject
 
     private bool _isClean = true;
     public bool IsClean { get => _isClean; }
-    private Player _player = null;
-    public Player Player { get => _player; set { _player = value; _isClean = false; } }
-    private List<Enemy> _enemies = new List<Enemy>();
-    public List<Enemy> Enemies { get => _enemies; set { _enemies = value; _isClean = false; } }
+    private PlayerData _player = new PlayerData();
+    public PlayerData Player { get => _player; set { _player = value; _isClean = false; } }
+    private List<EnemyData> _enemies = new List<EnemyData>();
+    public List<EnemyData> Enemies { get => _enemies; set { _enemies = value; _isClean = false; } }
     private List<ResourceBehaviour> _resources = new List<ResourceBehaviour>();
     public List<ResourceBehaviour> Resources { get => _resources; set { _resources = value; _isClean = false; } }
     private List<Upgrade> _upgrades = new List<Upgrade>();
@@ -27,8 +27,8 @@ public class GameData : ScriptableObject
 
     public void CleanData()
     {
-        _player = null;
-        _enemies = new List<Enemy>();
+        _player = new PlayerData();
+        _enemies = new List<EnemyData>();
         _resources = new List<ResourceBehaviour>();
         _upgrades = new List<Upgrade>();
         _toDoTasks = new List<Task>();

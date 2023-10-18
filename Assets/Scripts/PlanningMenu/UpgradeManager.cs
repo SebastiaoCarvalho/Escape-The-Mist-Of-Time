@@ -92,6 +92,7 @@ public class UpgradeManager : MonoBehaviour
     }
 
     public void OnClick(Upgrade upgrade) {
+        if (upgrade.Cost > GameData.Player.skillPoints) return;
         if (! upgrade.IsPurchased) upgrade.Purchase();
     }
 }

@@ -4,11 +4,18 @@ using UnityEngine;
 using Escape.Game.AI;
 using System.Linq;
 
+public struct EnemyData {
+    public GameObject prefab;
+    public Vector3 position;
+    public float hp;
+}
+
 public class Enemy : MonoBehaviour, IObserved
 {
 
     private StateMachine _stateMachine;
     private float _hp = 10;
+    public float Hp { get { return _hp; } set { _hp = value; } }
     public GameObject AnchorPrefab;
     private GameObject _anchorPoint;
     private List<IObserver> _observers;
@@ -57,6 +64,8 @@ public class Enemy : MonoBehaviour, IObserved
         _hp -= damage;
         if (_hp <= 0) {
             NotifyObservers();
+            int i = GameManager.Instance.Enemies.IndexOf(this);
+            GameManager.Instance.Enemies[i] = null;
             Destroy(gameObject);
         }
     }

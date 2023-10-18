@@ -9,6 +9,7 @@ public class Upgrade {
     private string _name;
     private string _description;
     private int _cost;
+    public int Cost { get { return _cost; } }
 
     private bool _isPurchased = false;
     public bool IsPurchased { get { return _isPurchased; } }
