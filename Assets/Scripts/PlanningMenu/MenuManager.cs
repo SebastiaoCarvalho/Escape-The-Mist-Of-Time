@@ -9,8 +9,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameData GameData;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameData.DebugData();
         //In a "real game" we would want GameData to be persistent, but for testing, we need to reset it
@@ -22,22 +21,29 @@ public class MenuManager : MonoBehaviour
 
     private void InitializeGameData() {
         GameData.ToDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", TaskManager.Instance._toDoRegion.name),
-            new Task("Task C", "Just die please", TaskManager.Instance._toDoRegion.name)
+            new Task("Task D", "survive you dumbass", "ToDoRegion"),
+            new Task("Task C", "Just die please",  "ToDoRegion")
         };
         GameData.InProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", TaskManager.Instance._inProgressRegion.name)
+            new Task("Task B", "kill 'Mr Capeta'", "InProgressRegion")
         };
         GameData.CompletedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", TaskManager.Instance._completedRegion.name)
+            new Task("Task A", "simply exist", "CompletedRegion")
         };
 
-        UpgradeManager.Instance._head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
+        var head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
         GameData.Upgrades = new List<Upgrade>()
         {
-            UpgradeManager.Instance._head,
-            new Upgrade("Mind kill", "Boost your psychic powers", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab)),
-            new Upgrade("Flying", "Spread your wings", 1, UpgradeManager.Instance._head, Instantiate(UpgradeManager.Instance.UpgradePrefab))
+            head,
+            new Upgrade("Mind kill", "Boost your psychic powers", 1, head, Instantiate(UpgradeManager.Instance.UpgradePrefab)),
+            new Upgrade("Flying", "Spread your wings", 1, head, Instantiate(UpgradeManager.Instance.UpgradePrefab))
+        };
+
+        GameData.Items= new List<Item>()
+        {
+            new Item("Stone", "This is a stone"),
+            new Item("Stone", "This is a stone"),
+            new Item("Stone", "This is a stone"),
         };
     }
 

@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
     private List<ItemMenu> _items;
     public GameObject StickyNotePrefab;
     private GameObject _inventoryRegion;
-
+    [SerializeField] private GameData gameData;
     public static InventoryManager Instance { get; set;}
 
 
@@ -19,10 +19,7 @@ public class InventoryManager : MonoBehaviour
 
         _inventoryRegion = GameObject.Find("InventoryRegion");
 
-        _items = new List<ItemMenu>()
-        {
-            new ItemMenu("Stone", 3, Instantiate(StickyNotePrefab), _inventoryRegion)
-        };
+        GenerateItemMenu();
 
         ReloadItems();
     }
@@ -42,6 +39,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
+    private void GenerateItemMenu() {
+        List<Item> items = gameData.Items;
+        _items = new List<ItemMenu>();
+        foreach(Item item in items) {
+            ItemMenu itemMenu = _items.Find(menu => menu.Name == item.Name);
+            if (itemMenu == null) {
+                _items.Add(new ItemMenu(item.Name, 1, Instantiate(StickyNotePrefab), _inventoryRegion));
+            } else {
+                itemMenu.AddItem(item);
+            }
+        }
+    }
 
 }

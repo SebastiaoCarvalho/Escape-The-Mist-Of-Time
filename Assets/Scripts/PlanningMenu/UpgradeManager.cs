@@ -8,7 +8,12 @@ public class UpgradeManager : MonoBehaviour
     private GameObject _upgradeScreen;
     public GameObject UpgradePrefab;
     public Material LineMaterial;
-    public Upgrade _head;
+    private Upgrade _head;
+    public Upgrade Head {
+        get { return _head; }
+        set { _head = value; _isDirty = true; }
+    }
+    [SerializeField] private GameData GameData;
     private bool _isDirty = true;
 
     public static UpgradeManager Instance { get; set; }
@@ -20,7 +25,8 @@ public class UpgradeManager : MonoBehaviour
     }
 
     private void Start() {
-
+        _head = GameData.Upgrades[0];
+        InitializeUpgrades();
     }
 
     // Update is called once per frame
@@ -29,6 +35,18 @@ public class UpgradeManager : MonoBehaviour
         if (_isDirty) {
             CleanTree();
             Reload();
+        }
+    }
+
+    private void InitializeUpgrades() {
+        List<Upgrade> upgrades = new List<Upgrade> { _head };
+        while (upgrades.Count > 0) {
+            Upgrade upgrade = upgrades[0];
+            upgrades.RemoveAt(0);
+            upgrade.InitializePrefab(Instantiate(UpgradePrefab));
+            for (int i = 0; i < upgrade.ChildCount; i++) {
+                upgrades.Add(upgrade.GetChild(i));
+            }
         }
     }
 

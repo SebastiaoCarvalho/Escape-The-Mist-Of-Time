@@ -56,11 +56,9 @@ public class Enemy : MonoBehaviour, IObserved
     public void TakeDamage(float damage) {
         _hp -= damage;
         if (_hp <= 0) {
+            NotifyObservers();
             Destroy(gameObject);
         }
     }
 
-    private void OnDestroy() {
-        NotifyObservers();
-    }
 }

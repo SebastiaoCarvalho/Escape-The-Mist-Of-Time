@@ -497,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpgradePrefab: {fileID: 3753524313350270398, guid: 8cabba703df589b4aa0e1b91a307df48, type: 3}
   LineMaterial: {fileID: 2100000, guid: 823ed040cfadbbf41b385ad2b050efc1, type: 2}
+  GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
 --- !u!1 &222789511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,6 +1976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StickyNotePrefab: {fileID: 4026823061692814688, guid: 41766af40a428cf409dc5bcfc19004d2, type: 3}
+  gameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
 --- !u!1 &1557685811
 GameObject:
   m_ObjectHideFlags: 0

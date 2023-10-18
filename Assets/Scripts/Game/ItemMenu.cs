@@ -8,6 +8,7 @@ public class ItemMenu
 {
 
     private string name;
+    public string Name { get => name; }
     private List<Item> _items = new List<Item>();
     public int Amount { get => _items.Count;}
 

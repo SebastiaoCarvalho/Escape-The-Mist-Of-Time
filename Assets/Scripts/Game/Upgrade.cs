@@ -38,8 +38,12 @@ public class Upgrade {
 
     public Upgrade(string name, string description, int cost, Upgrade parent, GameObject gameObject) : this(name, description, cost, parent)
     {
+        
+    }
+
+    public void InitializePrefab(GameObject gameObject) {
         Object = gameObject;
-        Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+        Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _name;
         Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
     }
 

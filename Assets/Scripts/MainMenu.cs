@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadPlanningMenu() {
         GameData.CleanData();
+        GameData.DebugData();
         SceneManager.LoadSceneAsync("PlanningMenu");
     }
 
