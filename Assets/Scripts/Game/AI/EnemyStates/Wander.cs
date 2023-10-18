@@ -32,6 +32,8 @@ namespace Escape.Game.AI.Enemy.States {
             movement.y = 0;
             movement.Normalize();
             _character.transform.position += 5 * Time.deltaTime * movement;
+            _character.transform.rotation = Quaternion.LookRotation(movement);
+            _character.transform.rotation *= Quaternion.Euler(0, 90, 0);
         }
 
     }
