@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             GameObject enemy = ClosestEnemy();
             _clicked = true;
             if (enemy != null) 
-                enemy.GetComponent<Enemy>().TakeDamage(100); // For now kill enemy in one hit
+                enemy.GetComponent<Enemy>().TakeDamage(10); // For now kill enemy in one hit
         }
         else if (_clicked && !Input.GetMouseButton((int) MouseButton.Left)) {
             _clicked = false;
