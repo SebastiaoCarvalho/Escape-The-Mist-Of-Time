@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour
     public static MainMenuManager Instance { get; set; }
     private Dictionary<string, GameObject> _buttons;
     private ButtonEnum _currentButton = ButtonEnum.Unsigned;
+    [SerializeField] private GameData GameData;
 
 
     private enum ButtonEnum
@@ -32,11 +33,13 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadPlanningMenu()
     {
+        GameData.CleanData();
         SceneManager.LoadSceneAsync("PlanningMenu");
     }
 
     public void QuitGame()
     {
+        GameData.CleanData();
         Application.Quit();
     }
 
