@@ -12,8 +12,8 @@ public class GameData : ScriptableObject
     public PlayerData Player { get => _player; set { _player = value; _isClean = false; } }
     private List<EnemyData> _enemies = new List<EnemyData>();
     public List<EnemyData> Enemies { get => _enemies; set { _enemies = value; _isClean = false; } }
-    private List<ResourceBehaviour> _resources = new List<ResourceBehaviour>();
-    public List<ResourceBehaviour> Resources { get => _resources; set { _resources = value; _isClean = false; } }
+    private List<Vector3> _resources = new List<Vector3>(); // We use Vector3 since we only have one resource for our prototype
+    public List<Vector3> Resources { get => _resources; set { _resources = value; _isClean = false; } }
     private List<Upgrade> _upgrades = new List<Upgrade>();
     public List<Upgrade> Upgrades { get => _upgrades; set { _upgrades = value; _isClean = false; } }
     private List<Task> _toDoTasks = new List<Task>();
@@ -29,7 +29,7 @@ public class GameData : ScriptableObject
     {
         _player = new PlayerData();
         _enemies = new List<EnemyData>();
-        _resources = new List<ResourceBehaviour>();
+        _resources = new List<Vector3>();
         _upgrades = new List<Upgrade>();
         _toDoTasks = new List<Task>();
         _inProgressTasks = new List<Task>();
