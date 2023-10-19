@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Enemy> _enemies;
     public List<Enemy> Enemies { get { return _enemies; } }
 
-    [SerializeField] public List<ResourceBehaviour> _resources;
+    [SerializeField] private List<ResourceBehaviour> _resources;
+    [SerializeField] private GameObject _resourcePrefab;
 
     public List<Upgrade> _upgrades;
 
@@ -50,24 +52,25 @@ public class GameManager : MonoBehaviour
             {"Stone", new ItemMenu("Stone", 3)}
         };
 
-        _observeds = new List<IObserved>
-        {
-            GameObject.Find("MrCapeta").GetComponent<Enemy>()
-        };
-        _observeds[0].AddObserver(gameData.InProgressTasks[0]);
-
-
         // Complete data on beginning
         UpdatePlayer();
         UpdateEnemies();
-        gameData.Resources = _resources;                  
+        gameData.Resources.ForEach(resource => Instantiate(_resourcePrefab, resource, Quaternion.identity));
+
+        _observeds = new List<IObserved>
+        {
+            GameObject.Find("MrCapeta(Clone)").GetComponent<Enemy>()
+        };
+        _observeds[0].AddObserver(gameData.InProgressTasks[0]);            
         // gameData.items = _items;
         
 
     }
 
     private void UpdatePlayer() {
+        player.GetComponent<CharacterController>().enabled = false;
         playerScript.gameObject.transform.position = gameData.Player.position;
+        player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("Set Player position " + playerScript.gameObject.transform.position);
         playerScript.HP = gameData.Player.hp;
         playerScript.SkillPoints = gameData.Player.skillPoints;

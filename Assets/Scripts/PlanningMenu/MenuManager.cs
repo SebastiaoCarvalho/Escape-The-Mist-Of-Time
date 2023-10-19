@@ -69,6 +69,10 @@ public class MenuManager : MonoBehaviour
             hp = 100,
             skillPoints = 0
         };
+        GameData.Resources = new List<Vector3>()
+        {
+            new Vector3(70, -7.5f, 400)
+        };
 
     }
 
