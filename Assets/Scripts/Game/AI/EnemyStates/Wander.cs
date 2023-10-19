@@ -1,18 +1,24 @@
 using System;
 using UnityEngine;
+using Escape.Game;
 
-namespace Escape.Game.AI.Enemy.States {
+namespace Escape.Game.AI.EnemyStates {
 
     public class Wander : State {
 
         private GameObject _character;
+        private Enemy _enemyScript;
         private GameObject _anchorPoint;
-        private float _radius = 20f;
+        private float _radius = 15f;
+        private float _speed = 0.5f;
         private Vector3 _destination;
 
-        public Wander(GameObject gameObject, GameObject anchorPoint) {
+        public Wander(GameObject gameObject, GameObject anchorPoint, float speed, float radius) {
             this._character = gameObject;
+            this._enemyScript = _character.GetComponent<Enemy>();
             this._anchorPoint = anchorPoint;
+            this._speed = speed;
+            this._radius = radius;
             _destination = _anchorPoint.transform.position;
         }
 
@@ -22,18 +28,16 @@ namespace Escape.Game.AI.Enemy.States {
             if ((destination - character).magnitude < 1f) {
                 Vector2 circle = UnityEngine.Random.insideUnitCircle * _radius;
                 _destination = _anchorPoint.transform.position + new Vector3(circle.x, 0, circle.y);
-                /* if (Physics.Raycast(_destination + new Vector3(0, 100, 0), Vector3.down, out RaycastHit hit, 200f, LayerMask.GetMask("Ground")))
-                {
-                    _destination = hit.point;
-                } */
-                
             }
-            Vector3 movement = _destination - _character.transform.position;
-            movement.y = 0;
-            movement.Normalize();
-            _character.transform.position += 5 * Time.deltaTime * movement;
-            _character.transform.rotation = Quaternion.LookRotation(movement);
-            _character.transform.rotation *= Quaternion.Euler(0, 90, 0);
+            else
+            {
+                Vector3 movement = _destination - _character.transform.position;
+                movement.y = 0;
+                movement.Normalize();
+                _character.GetComponent<Rigidbody>().velocity = _speed * movement;
+                _character.transform.rotation = Quaternion.LookRotation(movement);
+                _character.transform.rotation *= Quaternion.Euler(0, _enemyScript.ExtraRotation, 0);
+            }
         }
 
     }
