@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void UpdateEnemies() {
+        _enemies = new List<Enemy>();
         foreach (EnemyData enemyData in gameData.Enemies) {
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
@@ -166,6 +167,8 @@ public class GameManager : MonoBehaviour
         };
         List<EnemyData> previous = gameData.Enemies;
         gameData.Enemies = new List<EnemyData>();
+        Debug.Log("Enemies count: " + _enemies.Count);
+        Debug.Log("Enemies2 : " + previous.Count);
         for (int i = 0; i < _enemies.Count; i++) {
             if (_enemies[i] != null) {
                 gameData.Enemies.Add(new EnemyData{
