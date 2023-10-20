@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MapManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instantiatedButtons.Add(GameObject.Find("MapIcon"));
         DrawOnMap();
     }
 
@@ -73,5 +75,21 @@ public class MapManager : MonoBehaviour
         instantiated.transform.SetParent(MiddleOfTheMap.transform, false);
         instantiated.transform.localPosition = pos;
         instantiated.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+    }
+
+    public void OnClickMapIconButton()
+    {
+        //Can't use the On Click in a prefab button, for now only workd on Player icon
+        GameObject buttonEvent = EventSystem.current.currentSelectedGameObject;
+
+        foreach(GameObject button in instantiatedButtons)
+        {
+            if(button == buttonEvent)
+            {
+                //Put clicked button on top of hierarchy 
+                button.transform.SetAsLastSibling();
+                break;
+            }
+        }
     }
 }
