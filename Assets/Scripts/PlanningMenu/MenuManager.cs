@@ -73,6 +73,11 @@ public class MenuManager : MonoBehaviour
         {
             new Vector3(70, -7.5f, 400)
         };
+        GameData.RespawnPoints = new List<Vector3>()
+        {
+            new Vector3(30, -7, 390),
+            new Vector3(80, -7, 434),
+        };
 
     }
 

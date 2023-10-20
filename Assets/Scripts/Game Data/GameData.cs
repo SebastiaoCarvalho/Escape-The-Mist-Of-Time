@@ -24,6 +24,8 @@ public class GameData : ScriptableObject
     public List<Task> CompletedTasks { get => _completedTasks; set { _completedTasks = value; _isClean = false; } }
     private List<Item> _items = new List<Item>();
     public List<Item> Items { get => _items; set { _items = value; _isClean = false; } }
+    private List<Vector3> _respawnPoints = new List<Vector3>();
+    public List<Vector3> RespawnPoints { get => _respawnPoints; set { _respawnPoints = value; _isClean = false; } }
 
     public void CleanData()
     {
@@ -35,6 +37,7 @@ public class GameData : ScriptableObject
         _inProgressTasks = new List<Task>();
         _completedTasks = new List<Task>();
         _items = new List<Item>();
+        _respawnPoints = new List<Vector3>();
         _isClean = true;
     }
 
@@ -48,6 +51,7 @@ public class GameData : ScriptableObject
         Debug.Log("InProgressTasks: " + _inProgressTasks.Count);
         Debug.Log("CompletedTasks: " + _completedTasks.Count);
         Debug.Log("Items: " + _items.Count);
+        Debug.Log("RespawnPoints: " + _respawnPoints.Count);
     }
 
 }
