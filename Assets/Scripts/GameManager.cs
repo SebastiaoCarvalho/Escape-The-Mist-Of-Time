@@ -62,9 +62,8 @@ public class GameManager : MonoBehaviour
             GameObject.Find("MrCapeta(Clone)").GetComponent<Enemy>()
         };
         _observeds[0].AddObserver(gameData.InProgressTasks[0]);            
-        // gameData.items = _items;
         
-
+        
     }
 
     private void UpdatePlayer() {

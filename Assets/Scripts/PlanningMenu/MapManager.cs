@@ -10,6 +10,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameData gameData;
     [SerializeField] private GameObject MapIconPrefab;
     [SerializeField] private GameObject MiddleOfTheMap;
+    private List<GameObject> instantiatedButtons = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -17,11 +18,6 @@ public class MapManager : MonoBehaviour
         DrawOnMap();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //DrawEnemiesOnMap();
-    }
 
     private void DrawOnMap()
     {
@@ -49,6 +45,16 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        foreach(Vector3 respawPoints in gameData.RespawnPoints)
+        {
+            if ((respawPoints.x < playerPos.x + 80 && respawPoints.x > playerPos.x - 80) &&
+                (respawPoints.z < playerPos.z + 50 && respawPoints.z > playerPos.z - 50))
+            {
+                Vector3 enemyMapPos = new Vector3((respawPoints.x - playerPos.x) * 2.5f, (respawPoints.z - playerPos.z) * 2.5f, 0);
+                inicializePrefab(Instantiate(MapIconPrefab), "Checkpoint", enemyMapPos);
+            }
+        }
+
         /*
         foreach(Item items in gameData.Items)
         {
@@ -63,6 +69,7 @@ public class MapManager : MonoBehaviour
 
     private void inicializePrefab(GameObject instantiated, string text, Vector3 pos)
     {
+        instantiatedButtons.Add(instantiated);
         instantiated.transform.SetParent(MiddleOfTheMap.transform, false);
         instantiated.transform.localPosition = pos;
         instantiated.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
