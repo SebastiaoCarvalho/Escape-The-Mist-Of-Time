@@ -11,11 +11,13 @@ public class MainMenuManager : MonoBehaviour
     private Dictionary<string, GameObject> _buttons;
     private ButtonEnum _currentButton = ButtonEnum.Unsigned;
     [SerializeField] private GameData GameData;
+    [SerializeField] private GameObject _tutorial;
 
 
     private enum ButtonEnum
     {
         Start,
+        Tutorial,
         Quit,
         Unsigned
     }
@@ -37,6 +39,16 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadSceneAsync("PlanningMenu");
     }
 
+    public void LoadTutorial()
+    {
+        _tutorial.SetActive(true);
+    }
+
+    public void ExitTutorial()
+    {
+        _tutorial.SetActive(false);
+    }
+
     public void QuitGame()
     {
         GameData.CleanData();
@@ -55,6 +67,11 @@ public class MainMenuManager : MonoBehaviour
             }
             else if(_currentButton == ButtonEnum.Start)
             {
+                _currentButton = ButtonEnum.Tutorial;
+                EventSystem.current.SetSelectedGameObject(_buttons["Tutorial"]);
+            }
+            else if(_currentButton == ButtonEnum.Tutorial)
+            {
                 _currentButton = ButtonEnum.Quit;
                 EventSystem.current.SetSelectedGameObject(_buttons["Quit"]);
             }
@@ -67,6 +84,11 @@ public class MainMenuManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (_currentButton == ButtonEnum.Quit)
+            {
+                _currentButton = ButtonEnum.Tutorial;
+                EventSystem.current.SetSelectedGameObject(_buttons["Tutorial"]);
+            }
+            else if (_currentButton == ButtonEnum.Tutorial)
             {
                 _currentButton = ButtonEnum.Start;
                 EventSystem.current.SetSelectedGameObject(_buttons["Play"]);
