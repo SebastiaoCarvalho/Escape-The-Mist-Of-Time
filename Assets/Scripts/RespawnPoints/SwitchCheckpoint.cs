@@ -18,7 +18,7 @@ public class SwitchCheckpoint : MonoBehaviour, IInteractible
     public bool Interact(Interactor interactor) {
         //gameManager.switchRespawnPoint(interactor.transform.position);
         gameManager.SetRespawnPosition(interactor.transform.position);
-        gameManager.ResetTime();
+        gameManager.SwitchCheckpoint();
         Debug.Log("Switch");
         return true;
     }

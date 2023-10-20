@@ -12,7 +12,6 @@ public struct EnemyData {
 
 public class Enemy : MonoBehaviour, IObserved
 {
-
     private StateMachine _stateMachine;
     public float Hp { get { return _hp; } set { _hp = value; } }
     public float ExtraRotation { get { return _extraRotation; } }
