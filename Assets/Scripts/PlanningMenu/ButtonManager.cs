@@ -91,18 +91,6 @@ public class ButtonManager : MonoBehaviour
         _previousScreen.SetActive(true);
     }
 
-    public void OnClickMapIconButton()
-    {
-        //Get button that was pressed through EventSystem.current.currentSelectedGameObject
-        GameObject button = EventSystem.current.currentSelectedGameObject;
-
-        GameObject hierarchy = GameObject.Find("MapBackground");
-
-        //Put button on top of hierarchy
-
-
-    }
-
     public void OnClickMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
