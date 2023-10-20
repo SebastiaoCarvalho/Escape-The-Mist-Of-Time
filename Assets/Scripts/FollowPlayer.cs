@@ -25,7 +25,7 @@ public class FollowPlayer : MonoBehaviour
     private GameManager gameManager;
 
     void Start() {
-        transform.position = transform.position + offset;
+        transform.position = player.transform.position + offset;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
