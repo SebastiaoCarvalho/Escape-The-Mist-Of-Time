@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private SmokeController smoke;
     private Player playerScript;
+    private bool _timeChanged;
     public YouDiedPanel diedPanel;
     [SerializeField] private Vector3 respawnPosition;
 
@@ -91,7 +92,16 @@ public class GameManager : MonoBehaviour
     {
         // do not allow time to pass if player is near thing
         remainingTimeAlive += timeDifference * slowDownTimeEffect;
-        
+        _timeChanged = true;
+    }
+
+    public void LateUpdate()
+    {
+        if (!_timeChanged)
+        {
+            return;
+        }
+
         if (remainingTimeAlive <= 0)
         {
             Debug.Log("respawning");
@@ -105,11 +115,16 @@ public class GameManager : MonoBehaviour
             string result= string.Format("{0:0.00}", remainingTimeAlive );
             timeText.text = "Time: " + result;
         }
+
+        _timeChanged = false;
     }
 
     public void SetRespawnPosition(Vector3 position)
     {
-        respawnPosition = position;
+        if (!timeOut)
+        {
+            respawnPosition = position;
+        }
     }
 
     IEnumerator DelayRespawn(float duration)
