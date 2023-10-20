@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private float _attackRange = 5f;
     private float _hp = 100f;
     public float HP { get { return _hp; } set { _hp = value; } }
+    public bool Moved { get { return moved; } }
     public float lastHorizontalValue;
     private bool _clicked;
     public float lastVerticalValue;
@@ -115,6 +116,7 @@ public class Player : MonoBehaviour
         controller.enabled = true;
         lastHorizontalValue = 0;
         lastVerticalValue = 0;
+        ResetHealth();
         moved = false;
     }
 
@@ -123,11 +125,18 @@ public class Player : MonoBehaviour
         moved = false;
     }
 
+    public void ResetHealth()
+    {
+        _hp = 100f;
+    }
+
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Enemy")) {
             _hp -= 10;
             if (_hp <= 0) {
-                Destroy(gameObject);
+                gameManager.timeOut = true;
+                gameManager.StartRespawn();
+                gameObject.SetActive(false);
                 return;
             }
             Vector3 bounceBack = transform.position - other.gameObject.transform.position;

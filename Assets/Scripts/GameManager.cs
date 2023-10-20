@@ -96,9 +96,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("respawning");
             timeOut = true;
-            smoke.CloseSmoke();
-            diedPanel.Open();
-            StartCoroutine(DelayRespawn(2.2f));
+            StartRespawn();
             timeText.text = "Time: " + "0.00";
         }
         else{
@@ -110,6 +108,13 @@ public class GameManager : MonoBehaviour
     public void SetRespawnPosition(Vector3 position)
     {
         respawnPosition = position;
+    }
+
+    public void StartRespawn()
+    {
+        smoke.CloseSmoke();
+        diedPanel.Open();
+        StartCoroutine(DelayRespawn(2.2f));
     }
 
     IEnumerator DelayRespawn(float duration)
@@ -127,6 +132,10 @@ public class GameManager : MonoBehaviour
     public void RespawnPlayer()
     {
         ResetTime();
+        if (!player.activeSelf) 
+        {
+            player.SetActive(true);
+        }
         playerScript.Respawn(respawnPosition);
         gameCamera.GetComponent<FollowPlayer>().ResetOffset();
         smoke.OpenSmoke();
@@ -139,6 +148,12 @@ public class GameManager : MonoBehaviour
         remainingTimeAlive = 10.0f;
         UpdateTime(0.0f);
         playerScript.ResetMove();
+    }
+
+    public void SwitchCheckpoint()
+    {
+        ResetTime();
+        playerScript.ResetHealth();
     }
         
     public void CollectItem(Item item) {
