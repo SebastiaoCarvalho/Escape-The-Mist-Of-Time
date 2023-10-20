@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateEnemies() {
         _enemies = new List<Enemy>();
+        Debug.Log(gameData.Enemies.Count);
         foreach (EnemyData enemyData in gameData.Enemies) {
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
@@ -159,7 +161,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("completed");
     }
 
-    private void OnDestroy() {
+    public void OpenMenu()
+    {
+        SaveData();
+        SceneManager.LoadSceneAsync(1);
+    }
+
+    private void SaveData() {
         gameData.Player = new PlayerData{
             position = respawnPosition,
             hp = playerScript.HP,
@@ -170,6 +178,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Enemies count: " + _enemies.Count);
         Debug.Log("Enemies2 : " + previous.Count);
         for (int i = 0; i < _enemies.Count; i++) {
+            Debug.Log("is enemy null" + i +_enemies[i]);
             if (_enemies[i] != null) {
                 gameData.Enemies.Add(new EnemyData{
                     prefab = previous[i].prefab,

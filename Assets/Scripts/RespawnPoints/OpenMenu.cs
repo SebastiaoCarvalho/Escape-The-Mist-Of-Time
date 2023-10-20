@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class OpenMenu : MonoBehaviour, IInteractible
 {
@@ -12,10 +11,15 @@ public class OpenMenu : MonoBehaviour, IInteractible
 
     public string InteractionPrompt => prompt;
 
+    private void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
     public bool Interact(Interactor interactor) {
         // switch scene
         Debug.Log("Open");
-        SceneManager.LoadSceneAsync(1);
+        gameManager.OpenMenu();
         return true;
     }
 
