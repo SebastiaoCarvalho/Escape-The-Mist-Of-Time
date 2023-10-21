@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private float _attackRange = 5f;
     private float _hp = 100f;
     public float HP { get { return _hp; } set { _hp = value; } }
-    public bool Moved { get { return moved; } }
+    public bool Moved { get { return moved; } set { moved = value; } }
     public float lastHorizontalValue;
     private bool _clicked;
     public float lastVerticalValue;
