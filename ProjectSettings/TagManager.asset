@@ -11,6 +11,7 @@ TagManager:
   - Resource
   - MenuButton
   - MainMenuButton
+  - Music
   layers:
   - Default
   - TransparentFX
