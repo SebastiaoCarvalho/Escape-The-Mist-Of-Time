@@ -8,6 +8,8 @@ public class GameData : ScriptableObject
 
     private bool _isClean = true;
     public bool IsClean { get => _isClean; }
+    private float _timeScale = 1.0f;
+    public float TimeScale { get => _timeScale; set { _timeScale = value; _isClean = false; } }
     private PlayerData _player = new PlayerData();
     public PlayerData Player { get => _player; set { _player = value; _isClean = false; } }
     private List<EnemyData> _enemies = new List<EnemyData>();
@@ -27,6 +29,7 @@ public class GameData : ScriptableObject
 
     public void CleanData()
     {
+        _timeScale = 1.0f;
         _player = new PlayerData();
         _enemies = new List<EnemyData>();
         _resources = new List<Vector3>();
