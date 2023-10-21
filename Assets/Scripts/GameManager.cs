@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         playerScript.HP = gameData.Player.hp;
         playerScript.PlayerSpeed = gameData.Player.speed;
         playerScript.SkillPoints = gameData.Player.skillPoints;
+        gameCamera.GetComponent<FollowPlayer>().ResetOffset();
     }
 
     private void UpdateEnemies() {
