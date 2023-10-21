@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("Set Player position " + playerScript.gameObject.transform.position);
         playerScript.HP = gameData.Player.hp;
+        playerScript.PlayerSpeed = gameData.Player.speed;
         playerScript.SkillPoints = gameData.Player.skillPoints;
     }
 
@@ -201,7 +202,8 @@ public class GameManager : MonoBehaviour
         gameData.Player = new PlayerData{
             position = respawnPosition,
             hp = playerScript.HP,
-            skillPoints = playerScript.SkillPoints
+            skillPoints = playerScript.SkillPoints,
+            speed = playerScript.PlayerSpeed
         };
         List<EnemyData> previous = gameData.Enemies;
         gameData.Enemies = new List<EnemyData>();

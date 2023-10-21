@@ -7,6 +7,7 @@ using UnityEngine;
 public struct PlayerData {
     public Vector3 position;
     public float hp;
+    public float speed;
     public int skillPoints;
 }
 
@@ -14,7 +15,8 @@ public class Player : MonoBehaviour
 {
     private CharacterController controller;
     private GameManager gameManager;
-    private float playerSpeed = 7.0f;
+    private float _playerSpeed = 7.0f;
+    public float PlayerSpeed { get { return _playerSpeed; } set { _playerSpeed = value; } }
     private float _attackRange = 5f;
     private float _hp = 100f;
     public float HP { get { return _hp; } set { _hp = value; } }
@@ -48,7 +50,7 @@ public class Player : MonoBehaviour
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), -9.81f, Input.GetAxis("Vertical"));
         
-        controller.Move(playerSpeed * Time.deltaTime * move);
+        controller.Move(_playerSpeed * Time.deltaTime * move);
 
         if (move != Vector3.zero)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Upgrade {
     private string _name;
     private string _description;
     private int _cost;
+    private Action _effect;
     public int Cost { get { return _cost; } }
 
     private bool _isPurchased = false;
@@ -17,29 +19,25 @@ public class Upgrade {
     public int ChildCount { get { return _children.Count; } }
     public GameObject Object { get; set; }
 
-    public Upgrade(string name, string description, int cost)
+    public Upgrade(string name, string description, int cost, Action effect)
     {
         _name = name;
         _description = description;
         _cost = cost;
+        _effect = effect;
     }
 
-    public Upgrade(string name, string description, int cost, GameObject gameObject) : this(name, description, cost)
+    public Upgrade(string name, string description, int cost, Action effect, GameObject gameObject) : this(name, description, cost, effect)
     {
         Object = gameObject;
         Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
         Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
     }
 
-    public Upgrade(string name, string description, int cost, Upgrade parent) : this(name, description, cost)
+    public Upgrade(string name, string description, int cost, Action effect, Upgrade parent) : this(name, description, cost, effect)
     {
         _parent = parent;
         _parent.AddChild(this);
-    }
-
-    public Upgrade(string name, string description, int cost, Upgrade parent, GameObject gameObject) : this(name, description, cost, parent)
-    {
-        
     }
 
     public void InitializePrefab(GameObject gameObject) {
@@ -63,6 +61,7 @@ public class Upgrade {
         /* if (player.SkillPoints < _cost) return;
         player.SpendSkillPoints(_cost); */
         _isPurchased = true;
+        _effect();
         Object.GetComponent<Image>().color = Color.green;
     }
 }
