@@ -123,7 +123,7 @@ public class ButtonManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
             }
             //First when we enter the scene
-            else if (_currentButtonKeyIteratorTop == ButtonEnum.Unsingned)
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.Unsingned && _currentButtonKeyIterator == ButtonEnum.Unsingned)
             {
                 _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
                 _currentButtonKeyIterator = ButtonEnum.MapButton;
@@ -132,8 +132,25 @@ public class ButtonManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
             }
 
-            //Shouldn't arrive here, just a failsafe
+            //If Down button doesn't do anything
             _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
+
+            if(_currentButtonKeyIterator == ButtonEnum.MapButton)
+            {
+                EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
+            }
+            else if(_currentButtonKeyIterator == ButtonEnum.UpgradesButton)
+            {
+                EventSystem.current.SetSelectedGameObject(_buttons["UpgradesButton"]);
+            }
+            else if(_currentButtonKeyIterator == ButtonEnum.TasksButton)
+            {
+                EventSystem.current.SetSelectedGameObject(_buttons["TasksButton"]);
+            }
+            else if(_currentButtonKeyIterator == ButtonEnum.InventoryButton)
+            {
+                EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
+            }
 
 
         }
