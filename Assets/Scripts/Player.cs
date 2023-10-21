@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
-            if (move.x != 0 || move.z != 0)
+            if ((move.x != 0 || move.z != 0) && !gameManager.safePlace)
             {
                 moved = true;
             }
