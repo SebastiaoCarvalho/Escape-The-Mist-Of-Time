@@ -77,6 +77,7 @@ public class MenuManager : MonoBehaviour
         {
             new Vector3(30, -7, 390),
             new Vector3(80, -7, 434),
+            new Vector3(140, -7, 448)
         };
 
     }
