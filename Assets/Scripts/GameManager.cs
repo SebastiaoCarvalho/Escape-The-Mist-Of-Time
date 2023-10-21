@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
     public void ResetTime()
     {
         remainingTimeAlive = 10.0f;
-        UpdateTime(0.0f);
+        _timeChanged = true;
         playerScript.ResetMove();
     }
 
