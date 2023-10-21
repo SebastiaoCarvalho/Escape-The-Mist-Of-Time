@@ -34,12 +34,19 @@ public class MenuManager : MonoBehaviour
             new Task("Task A", "simply exist", "CompletedRegion")
         };
 
-        var head = new Upgrade("Speed boost", "Boost your speed", 0, Instantiate(UpgradeManager.Instance.UpgradePrefab));
+        var head = new Upgrade("Speed boost", "Boost your speed", 0, () => { 
+            GameData.Player = new PlayerData {
+                hp = GameData.Player.hp,
+                skillPoints = GameData.Player.skillPoints,
+                position = GameData.Player.position,
+                speed = GameData.Player.speed * 1.5f
+            };
+        });
         GameData.Upgrades = new List<Upgrade>()
         {
             head,
-            new Upgrade("Mind kill", "Boost your psychic powers", 1, head, Instantiate(UpgradeManager.Instance.UpgradePrefab)),
-            new Upgrade("Flying", "Spread your wings", 1, head, Instantiate(UpgradeManager.Instance.UpgradePrefab))
+            new Upgrade("Mind kill", "Boost your psychic powers", 1, () => {}, head),
+            new Upgrade("Flying", "Spread your wings", 1, () => {}, head)
         };
 
         GameData.Items= new List<Item>()
@@ -67,6 +74,7 @@ public class MenuManager : MonoBehaviour
         {
             position = new Vector3(25, -6.97f, 391),
             hp = 100,
+            speed = 7,
             skillPoints = 0
         };
         GameData.Resources = new List<Vector3>()
