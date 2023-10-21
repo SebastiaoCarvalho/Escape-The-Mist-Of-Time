@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -498,6 +498,7 @@ MonoBehaviour:
   UpgradePrefab: {fileID: 3753524313350270398, guid: 8cabba703df589b4aa0e1b91a307df48, type: 3}
   LineMaterial: {fileID: 2100000, guid: 823ed040cfadbbf41b385ad2b050efc1, type: 2}
   GameData: {fileID: 11400000, guid: 0ba28ab0eb8dcd048bfe816adfdf5d5d, type: 2}
+  ExclamationMarkPrefab: {fileID: 5808651541760856183, guid: d201c422e5267c146a8808efcc6885fa, type: 3}
 --- !u!1001 &205844547
 PrefabInstance:
   m_ObjectHideFlags: 0

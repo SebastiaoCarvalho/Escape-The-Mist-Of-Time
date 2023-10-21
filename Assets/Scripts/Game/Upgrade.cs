@@ -16,6 +16,8 @@ public class Upgrade {
 
     private bool _isPurchased = false;
     public bool IsPurchased { get { return _isPurchased; } }
+    private bool _isUnlocked = false;
+    public bool IsUnlocked { get { return _isUnlocked; } }
     private List<Upgrade> _children = new List<Upgrade>();
     public int ChildCount { get { return _children.Count; } }
     public GameObject Object { get; set; }
@@ -70,4 +72,9 @@ public class Upgrade {
         _isPurchased = true;
         _effect();
     }
+
+    public void Unlock() {
+        _isUnlocked = true;
+    }
+
 }
