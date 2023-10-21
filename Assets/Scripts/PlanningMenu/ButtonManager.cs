@@ -135,19 +135,19 @@ public class ButtonManager : MonoBehaviour
             //If Down button doesn't do anything
             _currentButtonKeyIteratorTop = ButtonEnum.Unsingned;
 
-            if(_currentButtonKeyIterator == ButtonEnum.MapButton)
+            if (_currentButtonKeyIterator == ButtonEnum.MapButton)
             {
                 EventSystem.current.SetSelectedGameObject(_buttons["MapButton"]);
             }
-            else if(_currentButtonKeyIterator == ButtonEnum.UpgradesButton)
+            else if (_currentButtonKeyIterator == ButtonEnum.UpgradesButton)
             {
                 EventSystem.current.SetSelectedGameObject(_buttons["UpgradesButton"]);
             }
-            else if(_currentButtonKeyIterator == ButtonEnum.TasksButton)
+            else if (_currentButtonKeyIterator == ButtonEnum.TasksButton)
             {
                 EventSystem.current.SetSelectedGameObject(_buttons["TasksButton"]);
             }
-            else if(_currentButtonKeyIterator == ButtonEnum.InventoryButton)
+            else if (_currentButtonKeyIterator == ButtonEnum.InventoryButton)
             {
                 EventSystem.current.SetSelectedGameObject(_buttons["InventoryButton"]);
             }
@@ -171,6 +171,16 @@ public class ButtonManager : MonoBehaviour
             {
                 _currentButtonKeyIterator = ButtonEnum.Unsingned;
                 _currentButtonKeyIteratorTop = ButtonEnum.ExitButton;
+                EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.MainMenuButton)
+            {
+
+                EventSystem.current.SetSelectedGameObject(_buttons["MainMenuButton"]);
+            }
+            else if (_currentButtonKeyIteratorTop == ButtonEnum.ExitButton)
+            {
+
                 EventSystem.current.SetSelectedGameObject(_buttons["ExitButton"]);
             }
             else
