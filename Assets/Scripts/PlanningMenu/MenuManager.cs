@@ -34,7 +34,7 @@ public class MenuManager : MonoBehaviour
             new Task("Task A", "simply exist", "CompletedRegion")
         };
 
-        var head = new Upgrade("Speed boost", "Boost your speed", 0, () => { 
+        var head = new Upgrade("Speed boost", "Boost your speed", 1, () => { 
             GameData.Player = new PlayerData {
                 hp = GameData.Player.hp,
                 skillPoints = GameData.Player.skillPoints,
@@ -45,8 +45,8 @@ public class MenuManager : MonoBehaviour
         GameData.Upgrades = new List<Upgrade>()
         {
             head,
-            new Upgrade("Mind kill", "Boost your psychic powers", 1, () => {}, head),
-            new Upgrade("Flying", "Spread your wings", 1, () => {}, head)
+            new Upgrade("Mind kill", "Boost your psychic powers", 2, () => {}, head),
+            new Upgrade("Flying", "Spread your wings", 2, () => {}, head)
         };
 
         GameData.Items= new List<Item>()
