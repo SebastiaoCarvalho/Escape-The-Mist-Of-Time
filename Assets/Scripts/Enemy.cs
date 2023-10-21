@@ -8,6 +8,7 @@ public struct EnemyData {
     public GameObject prefab;
     public Vector3 position;
     public float hp;
+    public bool givesUpgrade;
 }
 
 public class Enemy : MonoBehaviour, IObserved
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour, IObserved
     private StateMachine _stateMachine;
     public float Hp { get { return _hp; } set { _hp = value; } }
     public float Damage { get { return _damage; } }
+    public bool GivesUpgrade { get { return _givesUpgrade; } set { _givesUpgrade = value; } }
     public float ExtraRotation { get { return _extraRotation; } }
     public GameObject AnchorPrefab;
     private GameObject _anchorPoint;
@@ -30,6 +32,8 @@ public class Enemy : MonoBehaviour, IObserved
     [SerializeField] private bool _mrCapeta = false;
     [SerializeField] private float _chaseDistance;
     [SerializeField] private float _lostDistance;
+    [SerializeField] private bool _givesUpgrade = false;
+
     // Start is called before the first frame update
 
     private void Awake() {
@@ -83,6 +87,9 @@ public class Enemy : MonoBehaviour, IObserved
             NotifyObservers();
             int i = GameManager.Instance.Enemies.IndexOf(this);
             GameManager.Instance.Enemies[i] = null;
+            if (_givesUpgrade) {
+                GameObject.Find("Player").GetComponent<Player>().AddSkillPoint();
+            }
             Destroy(gameObject);
         }
         else {

@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
         foreach (EnemyData enemyData in gameData.Enemies) {
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
+            enemy.GetComponent<Enemy>().GivesUpgrade = enemyData.givesUpgrade;
             _enemies.Add(enemy.GetComponent<Enemy>());
         }
     }
