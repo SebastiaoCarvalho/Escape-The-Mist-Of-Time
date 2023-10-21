@@ -60,14 +60,16 @@ public class MenuManager : MonoBehaviour
         {
             prefab = MrCapetaPrefab,
             position = new Vector3(130, 6.5f, 444),
-            hp = 30
+            hp = 30,
+            givesUpgrade = true
         };
         GameData.Enemies.Add(enemy1);
         EnemyData enemy2 = new EnemyData
         {
             prefab = SpikeyPrefab,
             position = new Vector3(84, -8.1f, 425),
-            hp = 10
+            hp = 10,
+            givesUpgrade = false
         };
         GameData.Enemies.Add(enemy2);
         GameData.Player = new PlayerData
