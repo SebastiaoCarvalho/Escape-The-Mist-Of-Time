@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake() {
         Instance = this;
+        slowDownTimeEffect = gameData.TimeScale;
     }
 
     // Start is called before the first frame update
@@ -192,6 +193,7 @@ public class GameManager : MonoBehaviour
             _itemMenus.Add(item.Name, new ItemMenu(item.Name, 1));
             Debug.Log("Added " + item.Name + " to inventory");
         }
+        slowDownTimeEffect = 0.5f; // to simplify, assume all items are Time Stones for now
     }
 
     public void CompleteTask(Task task) {
@@ -209,6 +211,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void SaveData() {
+        gameData.TimeScale = slowDownTimeEffect;
         gameData.Player = new PlayerData{
             position = respawnPosition,
             hp = playerScript.HP,
