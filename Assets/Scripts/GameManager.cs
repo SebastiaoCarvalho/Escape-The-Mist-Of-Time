@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     private void UpdatePlayer() {
         player.GetComponent<CharacterController>().enabled = false;
         playerScript.gameObject.transform.position = gameData.Player.position;
+        respawnPosition = gameData.Player.position;
         player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("Set Player position " + playerScript.gameObject.transform.position);
         playerScript.HP = gameData.Player.hp;
@@ -214,7 +215,7 @@ public class GameManager : MonoBehaviour
     private void SaveData() {
         gameData.TimeScale = slowDownTimeEffect;
         gameData.Player = new PlayerData{
-            position = respawnPosition,
+            position = playerScript.gameObject.transform.position,
             hp = playerScript.HP,
             skillPoints = playerScript.SkillPoints,
             speed = playerScript.PlayerSpeed
