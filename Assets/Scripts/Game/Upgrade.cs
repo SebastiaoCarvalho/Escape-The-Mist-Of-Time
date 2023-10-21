@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Upgrade {
     
     private Upgrade _parent;
+    public Upgrade Parent { get { return _parent; } }
     private string _name;
     private string _description;
     private int _cost;
@@ -44,6 +45,14 @@ public class Upgrade {
         Object = gameObject;
         Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _name;
         Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
+        if (_isPurchased) {
+            Object.GetComponent<Image>().color = Color.green;
+            Object.GetComponent<Button>().interactable = false;
+        }
+        else if (! UpgradeManager.Instance.IsBuyable(this)) {
+            Object.GetComponent<Image>().color = Color.gray;
+            Object.GetComponent<Button>().interactable = false;
+        }
     }
 
     public void AddChild(Upgrade child)
@@ -56,12 +65,9 @@ public class Upgrade {
         return _children[index];
     }
 
-    public void Purchase(/* Player player */)
+    public void Purchase()
     {
-        /* if (player.SkillPoints < _cost) return;
-        player.SpendSkillPoints(_cost); */
         _isPurchased = true;
         _effect();
-        Object.GetComponent<Image>().color = Color.green;
     }
 }

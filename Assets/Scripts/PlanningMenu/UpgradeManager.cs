@@ -26,7 +26,6 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start() {
         _head = GameData.Upgrades[0];
-        InitializeUpgrades();
     }
 
     // Update is called once per frame
@@ -34,6 +33,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (_isDirty) {
             CleanTree();
+            InitializeUpgrades();
             Reload();
         }
     }
@@ -72,9 +72,9 @@ public class UpgradeManager : MonoBehaviour
         GameObject line = new GameObject("Line");
         line.transform.parent = upgrade.transform.parent;
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
-        lineRenderer.material = LineMaterial;
-        lineRenderer.startColor = Color.black;
-        lineRenderer.endColor = Color.black;
+        lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
         lineRenderer.startWidth = 6f;
         lineRenderer.endWidth = 6f;
         lineRenderer.positionCount = 2;
@@ -87,12 +87,27 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (Transform child in _upgradeScreen.transform)
         {
-            if (child.name.Equals("Line")) Destroy(child.gameObject);
+            if (! child.name.Equals("UpgradeManager")) Destroy(child.gameObject);
         }
     }
 
     public void OnClick(Upgrade upgrade) {
         if (upgrade.Cost > GameData.Player.skillPoints) return;
         if (! upgrade.IsPurchased) upgrade.Purchase();
+        GameData.Player = new PlayerData{
+            position = GameData.Player.position,
+            hp = GameData.Player.hp,
+            skillPoints = GameData.Player.skillPoints - upgrade.Cost
+        };
+        _isDirty = true;
+        InitializeUpgrades();
+    }
+
+    public bool IsBuyable(Upgrade upgrade) {
+        return (upgrade.Parent == null || upgrade.Parent.IsPurchased) && !upgrade.IsPurchased && IsAffordable(upgrade);
+    }
+
+    public bool IsAffordable(Upgrade upgrade) {
+        return upgrade.Cost <= GameData.Player.skillPoints;
     }
 }
