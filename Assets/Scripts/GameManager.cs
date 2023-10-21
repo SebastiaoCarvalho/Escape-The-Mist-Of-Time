@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public List<Upgrade> _upgrades;
 
     private List<IObserved> _observeds;
+
+    [SerializeField] private GameObject respawnPointsPrefab;
     public static GameManager Instance { get; private set; }
 
     private void Awake() {
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
         // Complete data on beginning
         UpdatePlayer();
         UpdateEnemies();
+        UpdateRespawnPoints();
         gameData.Resources.ForEach(resource => Instantiate(_resourcePrefab, resource, Quaternion.identity));
 
         _observeds = new List<IObserved>
@@ -84,6 +87,14 @@ public class GameManager : MonoBehaviour
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
             _enemies.Add(enemy.GetComponent<Enemy>());
+        }
+    }
+
+    private void UpdateRespawnPoints()
+    {
+        foreach(Vector3 respawnPointPos in gameData.RespawnPoints)
+        {
+            Instantiate(respawnPointsPrefab, respawnPointPos, Quaternion.identity);
         }
     }
 
