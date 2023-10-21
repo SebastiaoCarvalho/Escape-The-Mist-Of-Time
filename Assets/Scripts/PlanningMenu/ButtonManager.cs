@@ -66,6 +66,11 @@ public class ButtonManager : MonoBehaviour
         }
         _currentButtonKeyIterator = ButtonEnum.UpgradesButton;
         _previousScreen = _screens["UpgradesScreen"];
+        if (UpgradeManager.Instance.HasNew) {
+            Destroy(_buttons["UpgradesButton"].transform.GetChild(1).gameObject);
+            UpgradeManager.Instance.HasNew = false;
+            UpgradeManager.Instance.VisitUpgrades();
+        }
         _previousScreen.SetActive(true);
     }
 

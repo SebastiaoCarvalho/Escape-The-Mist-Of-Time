@@ -13,7 +13,10 @@ public class UpgradeManager : MonoBehaviour
         get { return _head; }
         set { _head = value; _isDirty = true; }
     }
+    private bool _hasNew = false;
+    public bool HasNew { get { return _hasNew; } set { _hasNew = value; } }
     [SerializeField] private GameData GameData;
+    [SerializeField] private GameObject ExclamationMarkPrefab;
     private bool _isDirty = true;
 
     public static UpgradeManager Instance { get; set; }
@@ -26,6 +29,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start() {
         _head = GameData.Upgrades[0];
+        TestForNewUpgrades();
     }
 
     // Update is called once per frame
@@ -48,6 +52,47 @@ public class UpgradeManager : MonoBehaviour
                 upgrades.Add(upgrade.GetChild(i));
             }
         }
+    }
+
+    private void TestForNewUpgrades() {
+        List<Upgrade> upgrades = new List<Upgrade> { _head };
+        while (upgrades.Count > 0) {
+            Upgrade upgrade = upgrades[0];
+            upgrades.RemoveAt(0);
+            if (IsAffordable(upgrade) && ! upgrade.IsUnlocked) {
+                Debug.Log(upgrade.Parent);
+                AddNewUpgradeSign();
+                return;
+            }
+            for (int i = 0; i < upgrade.ChildCount; i++) {
+                upgrades.Add(upgrade.GetChild(i));
+            }
+        }
+    }
+
+    public void VisitUpgrades() {
+        List<Upgrade> upgrades = new List<Upgrade> { _head };
+        while (upgrades.Count > 0) {
+            Upgrade upgrade = upgrades[0];
+            upgrades.RemoveAt(0);
+            if (IsAffordable(upgrade)) {
+                upgrade.Unlock();
+            }
+            if (upgrade.IsPurchased) continue;
+            for (int i = 0; i < upgrade.ChildCount; i++) {
+                upgrades.Add(upgrade.GetChild(i));
+            }
+        }
+    }
+
+    private void AddNewUpgradeSign() {
+        GameObject exclamationMark = Instantiate(ExclamationMarkPrefab);
+        GameObject button = GameObject.Find("UpgradesButton");
+        exclamationMark.transform.SetParent(button.transform, false);
+        float width = button.GetComponent<RectTransform>().rect.width/2;
+        float offset = exclamationMark.GetComponent<RectTransform>().rect.width;
+        exclamationMark.transform.localPosition = new Vector3(width + offset, 0, 0);
+        _hasNew = true;
     }
 
     private void Reload() {
