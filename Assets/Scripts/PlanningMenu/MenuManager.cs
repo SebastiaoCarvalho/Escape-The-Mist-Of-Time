@@ -73,6 +73,14 @@ public class MenuManager : MonoBehaviour
             givesUpgrade = false
         };
         GameData.Enemies.Add(enemy2);
+        EnemyData enemy3 = new EnemyData
+        {
+            prefab = SpikeyPrefab, // this  won't be active so prefab is irrelevant
+            position = new Vector3(123, 6.5f, 490),
+            hp = 50,
+            givesUpgrade = true
+        };
+        GameData.Enemies.Add(enemy3);
         GameData.Player = new PlayerData
         {
             position = new Vector3(25, -6.97f, 391),
@@ -88,7 +96,8 @@ public class MenuManager : MonoBehaviour
         {
             new Vector3(30, -7, 390),
             new Vector3(80, -7, 434),
-            new Vector3(140, -7, 448)
+            new Vector3(140, -7, 448),
+            new Vector3(120, 6.5f, 490)
         };
         
     }

@@ -87,10 +87,15 @@ public class GameManager : MonoBehaviour
         _enemies = new List<Enemy>();
         Debug.Log(gameData.Enemies.Count);
         foreach (EnemyData enemyData in gameData.Enemies) {
+            Debug.Log("enemyData: " + enemyData.position);
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
+            if (enemyData.position == new Vector3(123, 6.5f, 490)) {
+                enemy.SetActive(false);
+            }
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
             enemy.GetComponent<Enemy>().GivesUpgrade = enemyData.givesUpgrade;
             enemyData.observers?.ForEach(observer => enemy.GetComponent<Enemy>().AddObserver(observer));
+            if (enemy.GetComponent<Enemy>() == null) Debug.LogError("Enemy is null");
             _enemies.Add(enemy.GetComponent<Enemy>());
         }
     }
@@ -99,7 +104,8 @@ public class GameManager : MonoBehaviour
     {
         foreach(Vector3 respawnPointPos in gameData.RespawnPoints)
         {
-            Instantiate(respawnPointsPrefab, respawnPointPos, Quaternion.identity);
+            if (respawnPointPos != new Vector3(120, 6.5f, 490))
+                Instantiate(respawnPointsPrefab, respawnPointPos, Quaternion.identity);
         }
     }
 
@@ -283,6 +289,7 @@ public class GameManager : MonoBehaviour
                     position = _enemies[i].transform.position,
                     hp = _enemies[i].Hp,
                     givesUpgrade = _enemies[i].GivesUpgrade,
+                    observers = previous[i].observers
                 });
             }
         }

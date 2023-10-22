@@ -94,9 +94,7 @@ public class Enemy : MonoBehaviour, IObserved
             Destroy(gameObject);
         }
         else {
-            Debug.LogError("A");
             if (_audioSource != null) {
-                Debug.LogError("B");
                 _audioSource.Play();
             }
         }
