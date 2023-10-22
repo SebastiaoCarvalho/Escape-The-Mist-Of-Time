@@ -232,7 +232,8 @@ public class GameManager : MonoBehaviour
                 gameData.Enemies.Add(new EnemyData{
                     prefab = previous[i].prefab,
                     position = _enemies[i].transform.position,
-                    hp = _enemies[i].Hp
+                    hp = _enemies[i].Hp,
+                    givesUpgrade = _enemies[i].GivesUpgrade,
                 });
             }
         }
