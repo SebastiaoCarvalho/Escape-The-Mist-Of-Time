@@ -64,13 +64,6 @@ public class GameManager : MonoBehaviour
         UpdateRespawnPoints();
         gameData.Resources.ForEach(resource => Instantiate(_resourcePrefab, resource, Quaternion.identity));
 
-        _observeds = new List<IObserved>
-        {
-            GameObject.Find("MrCapeta(Clone)").GetComponent<Enemy>()
-        };
-        _observeds[0].AddObserver(gameData.InProgressTasks[0]);            
-        
-        
     }
 
     private void UpdatePlayer() {
@@ -92,6 +85,7 @@ public class GameManager : MonoBehaviour
             GameObject enemy = Instantiate(enemyData.prefab, enemyData.position, Quaternion.identity);
             enemy.GetComponent<Enemy>().Hp = enemyData.hp;
             enemy.GetComponent<Enemy>().GivesUpgrade = enemyData.givesUpgrade;
+            enemyData.observers?.ForEach(observer => enemy.GetComponent<Enemy>().AddObserver(observer));
             _enemies.Add(enemy.GetComponent<Enemy>());
         }
     }

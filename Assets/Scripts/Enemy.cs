@@ -9,6 +9,7 @@ public struct EnemyData {
     public Vector3 position;
     public float hp;
     public bool givesUpgrade;
+    public List<IObserver> observers;
 }
 
 public class Enemy : MonoBehaviour, IObserved

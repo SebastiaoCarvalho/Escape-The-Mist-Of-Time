@@ -142,7 +142,8 @@ public class UpgradeManager : MonoBehaviour
         GameData.Player = new PlayerData{
             position = GameData.Player.position,
             hp = GameData.Player.hp,
-            skillPoints = GameData.Player.skillPoints - upgrade.Cost
+            skillPoints = GameData.Player.skillPoints - upgrade.Cost,
+            speed = GameData.Player.speed,
         };
         _isDirty = true;
         InitializeUpgrades();
