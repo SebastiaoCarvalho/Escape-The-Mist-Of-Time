@@ -43247,11 +43247,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnchorPrefab: {fileID: 0}
   _hp: 30
+  _damage: 50
   _speed: 3
-  _chaseSpeed: 5.5
+  _chaseSpeed: 6
   _radius: 10
   _extraRotation: 0
   _audioSource: {fileID: 4044917694401194053}
+  _mrCapeta: 1
+  _chaseDistance: 15
+  _lostDistance: 20
 --- !u!136 &6838284606392210471
 CapsuleCollider:
   m_ObjectHideFlags: 0

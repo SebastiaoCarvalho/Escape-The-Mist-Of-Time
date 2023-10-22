@@ -134,7 +134,8 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Enemy")) {
-            _hp -= 10;
+            Enemy enemyScript = other.gameObject.GetComponent<Enemy>();
+            _hp -= enemyScript.Damage;
             if (_hp <= 0) {
                 gameManager.timeOut = true;
                 gameManager.StartRespawn();

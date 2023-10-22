@@ -14,17 +14,22 @@ public class Enemy : MonoBehaviour, IObserved
 {
     private StateMachine _stateMachine;
     public float Hp { get { return _hp; } set { _hp = value; } }
+    public float Damage { get { return _damage; } }
     public float ExtraRotation { get { return _extraRotation; } }
     public GameObject AnchorPrefab;
     private GameObject _anchorPoint;
     private List<IObserver> _observers;
 
     [SerializeField] private float _hp = 10;
+    [SerializeField] private float _damage = 20f;
     [SerializeField] private float _speed = 0.5f;
     [SerializeField] private float _chaseSpeed = 0.5f;
     [SerializeField] private float _radius = 15.0f;
     [SerializeField] private float _extraRotation = 0.0f;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private bool _mrCapeta = false;
+    [SerializeField] private float _chaseDistance;
+    [SerializeField] private float _lostDistance;
     // Start is called before the first frame update
 
     private void Awake() {
@@ -34,7 +39,12 @@ public class Enemy : MonoBehaviour, IObserved
     void Start()
     {
         _anchorPoint = FindNearestAnchor();
-        _stateMachine = new BasicEnemyStateMachine(gameObject, _anchorPoint, GameObject.Find("Player"), _speed, _radius, _chaseSpeed);
+        if (_mrCapeta) {
+            _stateMachine = new MrCapetaStateMachine(gameObject, _anchorPoint, GameObject.Find("Player"), _speed, _radius, _chaseSpeed, _chaseDistance, _lostDistance);
+        }
+        else {
+            _stateMachine = new BasicEnemyStateMachine(gameObject, _anchorPoint, GameObject.Find("Player"), _speed, _radius, _chaseSpeed, _chaseDistance, _lostDistance);
+        }
     }
 
     // Update is called once per frame

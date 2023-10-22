@@ -44162,10 +44162,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnchorPrefab: {fileID: 0}
   _hp: 10
+  _damage: 20
   _speed: 5
-  _chaseSpeed: 5
+  _chaseSpeed: 5.5
   _radius: 15
   _extraRotation: 90
+  _mrCapeta: 0
+  _chaseDistance: 10
+  _lostDistance: 15
 --- !u!54 &4304244975131938477
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,9 +8,10 @@ namespace Escape.Game.AI.EnemyTransitions {
         private GameObject _player;
         private float _sightDistance = 15f;
 
-        public LostPlayer(GameObject character, GameObject player) {
+        public LostPlayer(GameObject character, GameObject player, float distance) {
             _character = character;
             _player = player;
+            _sightDistance = distance;
             _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
