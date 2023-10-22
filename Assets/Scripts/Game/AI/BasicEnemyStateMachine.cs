@@ -6,11 +6,11 @@ namespace Escape.Game.AI {
 
     public class BasicEnemyStateMachine : StateMachine {
 
-        public BasicEnemyStateMachine(GameObject character, GameObject anchorPoint, GameObject player, float wanderSpeed, float radius, float chaseSpeed) {
+        public BasicEnemyStateMachine(GameObject character, GameObject anchorPoint, GameObject player, float wanderSpeed, float radius, float chaseSpeed, float chaseDistance, float lostDistance) {
             Wander wander = new Wander(character, anchorPoint, wanderSpeed, radius);
             PursuePlayer pursuePlayer = new PursuePlayer(character, player, chaseSpeed);
-            Transition sawPlayer = new SawPlayer(character, player) { TargetState = pursuePlayer };
-            Transition lostPlayer = new LostPlayer(character, player) { TargetState = wander };
+            Transition sawPlayer = new SawPlayer(character, player, chaseDistance) { TargetState = pursuePlayer };
+            Transition lostPlayer = new LostPlayer(character, player, lostDistance) { TargetState = wander };
             wander.Transitions.Add(sawPlayer);
             pursuePlayer.Transitions.Add(lostPlayer);
             Build(new State[] { wander, pursuePlayer }, wander);

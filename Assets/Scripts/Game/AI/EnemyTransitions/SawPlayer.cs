@@ -9,10 +9,11 @@ namespace Escape.Game.AI.EnemyTransitions {
         private Player _playerScript;
         private float _sightDistance = 10f;
 
-        public SawPlayer(GameObject character, GameObject player) {
+        public SawPlayer(GameObject character, GameObject player, float distance) {
             _character = character;
             _player = player;
             _playerScript = player.GetComponent<Player>();
+            _sightDistance = distance;
             _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
