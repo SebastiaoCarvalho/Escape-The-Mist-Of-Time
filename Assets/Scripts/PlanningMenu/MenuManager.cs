@@ -24,8 +24,7 @@ public class MenuManager : MonoBehaviour
 
     private void InitializeGameData() {
         GameData.ToDoTasks = new List<Task>(){
-            new Task("Task D", "survive you dumbass", "ToDoRegion"),
-            new Task("Task C", "Just die please",  "ToDoRegion")
+            
         };
         GameData.InProgressTasks = new List<Task>() {
             new Task("Task B", "kill 'Mr Capeta'", "InProgressRegion", new List<Task>() { new Task("Task E", "kill 'Mr Pala Pala'", "ToDoRegion") } )
