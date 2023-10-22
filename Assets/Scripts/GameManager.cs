@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
             string result= string.Format("{0:0.00}", remainingTimeAlive );
             timeText.text = "Time: " + result;
         }
-        hpText.text = "HP: " + playerScript.HP;
+        hpText.text = "HP: " + Mathf.Max(0, playerScript.HP);
         _timeChanged = false;
     }
 
@@ -283,6 +283,7 @@ public class GameManager : MonoBehaviour
                     position = _enemies[i].transform.position,
                     hp = _enemies[i].Hp,
                     givesUpgrade = _enemies[i].GivesUpgrade,
+                    observers = previous[i].observers
                 });
             }
         }
