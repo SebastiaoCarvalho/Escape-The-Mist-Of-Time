@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -29,6 +31,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start() {
         _head = GameData.Upgrades[0];
+        GameObject.Find("Points").GetComponent<TextMeshProUGUI>().text = "Points: " + GameData.Player.skillPoints;
         TestForNewUpgrades();
     }
 
@@ -132,7 +135,7 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (Transform child in _upgradeScreen.transform)
         {
-            if (! child.name.Equals("UpgradeManager")) Destroy(child.gameObject);
+            if (! child.name.Equals("UpgradeManager") && !child.name.Equals("Points")) Destroy(child.gameObject);
         }
     }
 
@@ -146,6 +149,7 @@ public class UpgradeManager : MonoBehaviour
             speed = GameData.Player.speed,
         };
         _isDirty = true;
+        GameObject.Find("Points").GetComponent<TextMeshProUGUI>().text = "Points: " + GameData.Player.skillPoints;
         InitializeUpgrades();
     }
 

@@ -46,7 +46,7 @@ public class Upgrade {
     public void InitializePrefab(GameObject gameObject) {
         Object = gameObject;
         Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _name;
-        Object.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: 1";
+        Object.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + _cost;
         Object.GetComponent<Button>().onClick.AddListener(() => UpgradeManager.Instance.OnClick(this));
         if (_isPurchased) {
             Object.GetComponent<Image>().color = Color.green;
