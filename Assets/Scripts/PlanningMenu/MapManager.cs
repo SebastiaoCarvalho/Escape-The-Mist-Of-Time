@@ -4,20 +4,28 @@ using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
 
     [SerializeField] private GameData gameData;
-    [SerializeField] private GameObject MapIconPrefab;
+    [SerializeField] private GameObject MapIconResource;
+    [SerializeField] private GameObject MapIconEnemy;
+    [SerializeField] private GameObject MapIconRespawnPoint;
     [SerializeField] private GameObject MiddleOfTheMap;
     private List<GameObject> instantiatedButtons = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        instantiatedButtons.Add(GameObject.Find("MapIcon"));
+        instantiatedButtons.Add(GameObject.Find("MapIconPlayer"));
         DrawOnMap();
+    }
+
+    private void Update()
+    {
+        
     }
 
 
@@ -32,7 +40,7 @@ public class MapManager : MonoBehaviour
                 (enemy.position.z < playerPos.z + 50 && enemy.position.z > playerPos.z - 50))
             {
                 Vector3 enemyMapPos = new Vector3((enemy.position.x - playerPos.x) * 2.5f, (enemy.position.z - playerPos.z) * 2.5f, 0);
-                inicializePrefab(Instantiate(MapIconPrefab), "Enemy", enemyMapPos);
+                inicializePrefab(Instantiate(MapIconEnemy), enemyMapPos);
             }
 
         }
@@ -43,7 +51,7 @@ public class MapManager : MonoBehaviour
                 (resources.z < playerPos.z + 50 && resources.z > playerPos.z - 50))
             {
                 Vector3 enemyMapPos = new Vector3((resources.x - playerPos.x) * 2.5f, (resources.z - playerPos.z) * 2.5f, 0);
-                inicializePrefab(Instantiate(MapIconPrefab), "Resource", enemyMapPos);
+                inicializePrefab(Instantiate(MapIconResource), enemyMapPos);
             }
         }
 
@@ -53,28 +61,21 @@ public class MapManager : MonoBehaviour
                 (respawPoints.z < playerPos.z + 50 && respawPoints.z > playerPos.z - 50))
             {
                 Vector3 enemyMapPos = new Vector3((respawPoints.x - playerPos.x) * 2.5f, (respawPoints.z - playerPos.z) * 2.5f, 0);
-                inicializePrefab(Instantiate(MapIconPrefab), "Checkpoint", enemyMapPos);
+                inicializePrefab(Instantiate(MapIconRespawnPoint), enemyMapPos);
             }
         }
 
-        /*
-        foreach(Item items in gameData.Items)
-        {
-            if ((items..x < playerPos.x + 80 && items.position.x > playerPos.x - 80) &&
-                 (items.position.z < playerPos.z + 50 && items.position.z > playerPos.z - 50))
-            {
-                Vector3 enemyMapPos = new Vector3((items.position.x - playerPos.x) * 2.5f, (items.position.z - playerPos.z) * 2.5f, 0);
-                inicializePrefab(Instantiate(MapIconPrefab), "Enemy", enemyMapPos);
-            }
-        }*/
+        foreach(GameObject button in instantiatedButtons)
+        {            
+            button.GetComponent<Button>().onClick.AddListener(delegate { OnClickMapIconButton(); });
+        }
     }
 
-    private void inicializePrefab(GameObject instantiated, string text, Vector3 pos)
+    private void inicializePrefab(GameObject instantiated, Vector3 pos)
     {
         instantiatedButtons.Add(instantiated);
         instantiated.transform.SetParent(MiddleOfTheMap.transform, false);
         instantiated.transform.localPosition = pos;
-        instantiated.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
     }
 
     public void OnClickMapIconButton()
