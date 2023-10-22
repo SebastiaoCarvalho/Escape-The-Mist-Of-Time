@@ -61,7 +61,8 @@ public class MenuManager : MonoBehaviour
             prefab = MrCapetaPrefab,
             position = new Vector3(130, 6.5f, 444),
             hp = 30,
-            givesUpgrade = true
+            givesUpgrade = true,
+            observers = new List<IObserver>() {GameData.InProgressTasks[0]}
         };
         GameData.Enemies.Add(enemy1);
         EnemyData enemy2 = new EnemyData
@@ -89,7 +90,7 @@ public class MenuManager : MonoBehaviour
             new Vector3(80, -7, 434),
             new Vector3(140, -7, 448)
         };
-
+        
     }
 
     public void Clean() {
