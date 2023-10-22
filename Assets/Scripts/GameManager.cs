@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI hpText;
+    public TextMeshProUGUI slowText;
     private GameObject player;
     public GameObject gameCamera;
     [SerializeField] public GameData gameData;
@@ -112,6 +113,15 @@ public class GameManager : MonoBehaviour
 
     public void LateUpdate()
     {
+        if (slowDownTimeEffect == 1.0f)
+        {
+            slowText.text = "";
+        }
+        else
+        {
+            slowText.text = "Slow: " + (int) (1/slowDownTimeEffect) + "x";
+        }
+        
         if (!_timeChanged)
         {
             return;
