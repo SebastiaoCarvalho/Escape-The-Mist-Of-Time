@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviour
         UpdatePlayer();
         UpdateEnemies();
         UpdateRespawnPoints();
-        gameData.Resources.ForEach(resource => Instantiate(_resourcePrefab, resource, Quaternion.identity));
+        gameData.Resources.ForEach(resource => {
+            GameObject obj = Instantiate(_resourcePrefab, resource, Quaternion.identity);
+            _resources.Add(obj.GetComponent<ResourceBehaviour>());
+        });
 
     }
 
@@ -227,6 +230,9 @@ public class GameManager : MonoBehaviour
             speed = playerScript.PlayerSpeed
         };
         List<EnemyData> previous = gameData.Enemies;
+        List<Vector3> resources = new List<Vector3>();
+        _resources.ForEach(resource => { if (resource) resources.Add(resource.transform.position); });
+        gameData.Resources = resources;
         gameData.Enemies = new List<EnemyData>();
         Debug.Log("Enemies count: " + _enemies.Count);
         Debug.Log("Enemies2 : " + previous.Count);
