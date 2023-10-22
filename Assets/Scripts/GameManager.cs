@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private Player playerScript;
     private bool _timeChanged;
     public YouDiedPanel diedPanel;
+    public YouDiedPanel easterEggPanel;
     [SerializeField] private Vector3 respawnPosition;
 
     private Dictionary<string, ItemMenu> _itemMenus = new Dictionary<string, ItemMenu>();
@@ -129,7 +130,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("respawning");
             timeOut = true;
-            StartRespawn();
+            if (playerScript.PressingSpace) {
+                StartEasterEgg();
+            }
+            else {
+                StartRespawn();
+            }
             timeText.text = "Time: " + "0.00";
         }
         else{
@@ -154,6 +160,39 @@ public class GameManager : MonoBehaviour
         diedPanel.Open();
         StartCoroutine(DelayRespawn(2.2f));
     }
+
+    public void StartEasterEgg()
+    {
+        smoke.CloseSmoke();
+        easterEggPanel.Open();
+        StartCoroutine(DelayPlay(2.2f));
+    }
+
+    IEnumerator DelayPlay(float duration)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        AllowPlayerToMove();
+    }
+
+    public void AllowPlayerToMove()
+    {
+        ResetTime();
+        if (!player.activeSelf) 
+        {
+            player.SetActive(true);
+        }
+        playerScript.ResetMove();
+        smoke.OpenSmoke();
+        easterEggPanel.Close();
+        timeOut = false;
+    }
+
 
     IEnumerator DelayRespawn(float duration)
     {

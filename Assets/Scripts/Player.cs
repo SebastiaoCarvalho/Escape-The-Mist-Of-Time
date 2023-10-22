@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     public int SkillPoints { get { return _skillPoints; } set { _skillPoints = value; } }
 
     private bool moved = false;
+    private bool _pressingSpace = false;
+    public bool PressingSpace { get { return _pressingSpace; } }
 
     private void Start()
     {
@@ -48,21 +50,28 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown("space") && !moved)
+        {
+            _pressingSpace = true;
+            moved = true;
+        }
+        else if (Input.GetKeyUp("space"))
+        {
+            _pressingSpace = false;
+        }
+
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), -9.81f, Input.GetAxis("Vertical"));
         
         controller.Move(_playerSpeed * Time.deltaTime * move);
 
-        if (move != Vector3.zero)
+        gameObject.transform.forward = move;
+        if ((move.x != 0 || move.z != 0) && !gameManager.safePlace)
         {
-            gameObject.transform.forward = move;
-            if (move.x != 0 || move.z != 0  && !gameManager.safePlace)
-            {
-                moved = true;
-            }
-            if (moved)
-            {
-                gameManager.UpdateTime(-Time.deltaTime);
-            }
+            moved = true;
+        }
+        if (moved)
+        {
+            gameManager.UpdateTime(-Time.deltaTime);
         }
 
         if (Input.GetAxis("Horizontal") == 0) {
@@ -120,11 +129,13 @@ public class Player : MonoBehaviour
         lastVerticalValue = 0;
         ResetHealth();
         moved = false;
+        _pressingSpace = false;
     }
 
     public void ResetMove()
     {
         moved = false;
+        _pressingSpace = false;
     }
 
     public void ResetHealth()
