@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private float _attackRange = 5f;
     private float _hp = 100f;
     public float HP { get { return _hp; } set { _hp = value; } }
-    public bool Moved { get { return moved; } set { moved = value; } }
+    public bool Moved { get { return moved; } }
     public float lastHorizontalValue;
     private bool _clicked;
     public float lastVerticalValue;
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
-            if ((move.x != 0 || move.z != 0) && !gameManager.safePlace)
+            if (move.x != 0 || move.z != 0  && !gameManager.safePlace)
             {
                 moved = true;
             }
@@ -87,8 +87,8 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton((int) MouseButton.Left) && !_clicked) {
             GameObject enemy = ClosestEnemy();
             _clicked = true;
-            if (enemy != null) 
-                enemy.GetComponent<Enemy>().TakeDamage(10); // For now kill enemy in one hit
+            if (enemy != null)
+                enemy.GetComponent<Enemy>().TakeDamage(10);
         }
         else if (_clicked && !Input.GetMouseButton((int) MouseButton.Left)) {
             _clicked = false;
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
         foreach (GameObject enemy in enemies) {
-            Vector3 diff = enemy.transform.position - position;
+            Vector2 diff = new Vector2(enemy.transform.position.x - position.x, enemy.transform.position.z - position.z);
             float curDistance = diff.sqrMagnitude;
             if (curDistance < _attackRange && curDistance < distance) {
                 closest = enemy;
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
             Vector3 bounceBack = transform.position - other.gameObject.transform.position;
             bounceBack.y = 0.5f; // add bounce back a little up
             bounceBack.Normalize();
-            controller.Move(bounceBack * 5f);
+            controller.Move(bounceBack * 3f);
         }
     }
 

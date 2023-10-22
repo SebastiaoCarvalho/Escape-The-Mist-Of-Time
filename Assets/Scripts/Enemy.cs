@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, IObserved
     [SerializeField] private float _chaseSpeed = 0.5f;
     [SerializeField] private float _radius = 15.0f;
     [SerializeField] private float _extraRotation = 0.0f;
+    [SerializeField] private AudioSource _audioSource;
     // Start is called before the first frame update
 
     private void Awake() {
@@ -66,12 +67,20 @@ public class Enemy : MonoBehaviour, IObserved
     }
 
     public void TakeDamage(float damage) {
+        Debug.Log("HP: " + _hp + " Damage: " + damage);
         _hp -= damage;
         if (_hp <= 0) {
             NotifyObservers();
             int i = GameManager.Instance.Enemies.IndexOf(this);
             GameManager.Instance.Enemies[i] = null;
             Destroy(gameObject);
+        }
+        else {
+            Debug.LogError("A");
+            if (_audioSource != null) {
+                Debug.LogError("B");
+                _audioSource.Play();
+            }
         }
     }
 

@@ -60,7 +60,7 @@ public class MenuManager : MonoBehaviour
         {
             prefab = MrCapetaPrefab,
             position = new Vector3(130, 6.5f, 444),
-            hp = 10
+            hp = 30
         };
         GameData.Enemies.Add(enemy1);
         EnemyData enemy2 = new EnemyData
