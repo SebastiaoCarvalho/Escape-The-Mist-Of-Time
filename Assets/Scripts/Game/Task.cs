@@ -14,6 +14,8 @@ public class Task : IObserver
     public string Region {get; set;}
     private List<Task> _followUpTasks = new List<Task>();
     public List<Task> FollowUpTasks {get => _followUpTasks; }
+    private bool _isNew = true;
+    public bool IsNew { get { return _isNew; } set { _isNew = value; } }
 
     public Task(string name, string description, string region)
     {

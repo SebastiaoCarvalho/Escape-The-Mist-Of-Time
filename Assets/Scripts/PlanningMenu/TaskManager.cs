@@ -12,7 +12,9 @@ public class TaskManager : MonoBehaviour
     public GameObject StickyNotePrefab;
 
     [SerializeField] private GameData GameData;
-
+    [SerializeField] private GameObject ExclamationMarkPrefab;
+    private bool _hasNew = false;
+    public bool HasNew { get { return _hasNew; } set { _hasNew = value; } }
     public static TaskManager Instance {get; set;}
 
     private void Awake() {
@@ -26,6 +28,7 @@ public class TaskManager : MonoBehaviour
         _inProgressRegion = GameObject.Find("InProgressRegion");
         _completedRegion = GameObject.Find("CompletedRegion");
         InitializeTasks();
+        TestForNewTasks();
         ReloadTasks();
     }
 
@@ -36,10 +39,46 @@ public class TaskManager : MonoBehaviour
     }
 
     public void InitializeTasks() {
-        Debug.Log(GameData.ToDoTasks.Count);
         GameData.ToDoTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
         GameData.InProgressTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
         GameData.CompletedTasks.ForEach(task => task.InitializePrefab(Instantiate(StickyNotePrefab)));
+    }
+
+    private void TestForNewTasks() {
+        GameData.ToDoTasks.ForEach(task => {
+            if (task.IsNew) {
+                AddNewTaskSign();
+                return;
+            }
+        });
+        GameData.InProgressTasks.ForEach(task => {
+            if (task.IsNew) {
+                AddNewTaskSign();
+                return;
+            }
+        });
+        GameData.CompletedTasks.ForEach(task => {
+            if (task.IsNew) {
+                AddNewTaskSign();
+                return;
+            }
+        });
+    }
+
+    private void AddNewTaskSign() {
+        GameObject exclamationMark = Instantiate(ExclamationMarkPrefab);
+        GameObject button = GameObject.Find("TasksButton");
+        exclamationMark.transform.SetParent(button.transform, false);
+        float width = button.GetComponent<RectTransform>().rect.width/2;
+        float offset = exclamationMark.GetComponent<RectTransform>().rect.width;
+        exclamationMark.transform.localPosition = new Vector3(width + offset, 0, 0);
+        _hasNew = true;
+    }
+
+    public void VisitTasks() {
+        GameData.ToDoTasks.ForEach(task => task.IsNew = false);
+        GameData.InProgressTasks.ForEach(task => task.IsNew = false);
+        GameData.CompletedTasks.ForEach(task => task.IsNew = false);
     }
 
     private void ReloadTasks() {
