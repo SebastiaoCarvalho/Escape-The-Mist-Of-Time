@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI hpText;
     private GameObject player;
     public GameObject gameCamera;
     [SerializeField] public GameData gameData;
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour
             string result= string.Format("{0:0.00}", remainingTimeAlive );
             timeText.text = "Time: " + result;
         }
-
+        hpText.text = "HP: " + playerScript.HP;
         _timeChanged = false;
     }
 
