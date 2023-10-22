@@ -27,7 +27,7 @@ public class MenuManager : MonoBehaviour
             
         };
         GameData.InProgressTasks = new List<Task>() {
-            new Task("Task B", "Kill 'Mr Capeta'", "InProgressRegion", new List<Task>() { new Task("Task E", "kill 'Mr Pala Pala'", "ToDoRegion") } )
+            new Task("Task B", "Kill 'Mr Capeta'", "InProgressRegion", new List<Task>() { new Task("Task E", "Kill 'Mr Pala Pala'", "ToDoRegion") } )
         };
         GameData.CompletedTasks = new List<Task>() {
             
