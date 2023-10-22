@@ -82,6 +82,11 @@ public class ButtonManager : MonoBehaviour
         }
         _currentButtonKeyIterator = ButtonEnum.TasksButton;
         _previousScreen = _screens["TasksScreen"];
+        if (TaskManager.Instance.HasNew) {
+            Destroy(_buttons["TasksButton"].transform.GetChild(1).gameObject);
+            TaskManager.Instance.HasNew = false;
+            TaskManager.Instance.VisitTasks();
+        }
         _previousScreen.SetActive(true);
     }
 
