@@ -27,10 +27,10 @@ public class MenuManager : MonoBehaviour
             
         };
         GameData.InProgressTasks = new List<Task>() {
-            new Task("Task B", "kill 'Mr Capeta'", "InProgressRegion", new List<Task>() { new Task("Task E", "kill 'Mr Pala Pala'", "ToDoRegion") } )
+            new Task("Task B", "Kill 'Mr Capeta'", "InProgressRegion", new List<Task>() { new Task("Task E", "kill 'Mr Pala Pala'", "ToDoRegion") } )
         };
         GameData.CompletedTasks = new List<Task>() {
-            new Task("Task A", "simply exist", "CompletedRegion")
+            
         };
 
         var head = new Upgrade("Speed boost", "Boost your speed", 1, () => { 
